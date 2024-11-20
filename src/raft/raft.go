@@ -359,7 +359,7 @@ type AppendEntriesReply struct {
 // that the caller passes the address of the reply struct with &, not
 // the struct itself.
 func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool {
-	ok := rf.peers[server].Call("Raft.RequestVote", args, reply)
+	ok := rf.peers[server].Call("Raft.RequestVote", args, &reply)
 	return ok
 }
 
@@ -703,6 +703,8 @@ func (rf *Raft) sendEntries(peer int) {
 		DPrintf("Raft.sendEntries : Server %v %p (Term: %v, State: %v) , getterm error: %v", rf.me, rf, rf.currentTerm, rf.state, err)
 		return
 	}
+	entriesCopy := make([]LogEntry, len(rf.log[(rf.nextIndex[peer]-rf.getFirstLogIndex()):]))
+	copy(entriesCopy, rf.log[(rf.nextIndex[peer]-rf.getFirstLogIndex()):]) // 拷贝需要发送的日志条目
 	args := &AppendEntriesArgs{
 		Term:         rf.currentTerm,
 		LeaderId:     rf.me,
@@ -711,7 +713,7 @@ func (rf *Raft) sendEntries(peer int) {
 		// 可能会进行日志截断（例如通过快照机制，来节省存储空间），这时日志的起始索引
 		//（getFirstLogIndex()）可能不是 0，而是一个更大的数。
 		PrevLogTerm:  prevLogTerm,
-		Entries:      rf.log[(rf.nextIndex[peer] - rf.getFirstLogIndex()):],
+		Entries:      entriesCopy, // !!! 不能直接使用rf.log[(rf.nextIndex[peer]-rf.getFirstLogIndex()):]
 		LeaderCommit: rf.commitIndex,
 	}
 	// DPrintf("Server %v %p (Term: %v, State: %v) send AppendEntries to %v, args: %v", rf.me, rf, rf.currentTerm, rf.state, peer, args)
@@ -901,7 +903,7 @@ func (rf *Raft) sendSnapshot(peer int) {
 }
 
 func (rf *Raft) sendInstallSnapshot(server int, args *InstallSnapshotArgs, reply *InstallSnapshotReply) bool {
-	ok := rf.peers[server].Call("Raft.InstallSnapshot", args, reply)
+	ok := rf.peers[server].Call("Raft.InstallSnapshot", args, &reply)
 	return ok
 }
 
@@ -999,7 +1001,7 @@ func (rf *Raft) updateCommitIndex(index int) bool {
 }
 
 func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
-	ok := rf.peers[server].Call("Raft.AppendEntries", args, reply)
+	ok := rf.peers[server].Call("Raft.AppendEntries", args, &reply)
 	return ok
 }
 

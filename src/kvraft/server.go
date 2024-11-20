@@ -15,15 +15,6 @@ import (
 	"6.5840/raft"
 )
 
-const Debug = false
-
-func DPrintf(format string, a ...interface{}) (n int, err error) {
-	if Debug {
-		log.Printf(format, a...)
-	}
-	return
-}
-
 type Op struct {
 	// Your definitions here.
 	// Field names must start with capital letters,

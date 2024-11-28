@@ -29,7 +29,7 @@ func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
 	// You'll have to add code here.
 	ck.clientId = nrand()
 	ck.leaderId = 0
-	ck.sequenceNum = 0
+	ck.sequenceNum = 1
 
 	return ck
 }
@@ -99,7 +99,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 	args := PutAppendArgs{
 		Key:         key,
 		Value:       value,
-		Op:          op,
+		OpType:      op,
 		ClientId:    ck.clientId,
 		SequenceNum: ck.sequenceNum,
 	}

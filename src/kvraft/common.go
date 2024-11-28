@@ -19,7 +19,7 @@ type PutAppendArgs struct {
 	// otherwise RPC will break.
 	ClientId    int64
 	SequenceNum int64
-	Op          string
+	OpType      string
 }
 
 type PutAppendReply struct {
@@ -49,4 +49,5 @@ const (
 	GetCmd    = 1
 	PutCmd    = 2
 	AppendCmd = 3
+	NoOp      = 4
 )

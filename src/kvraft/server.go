@@ -44,33 +44,62 @@ type KVServer struct {
 	maxraftstate int // snapshot if log grows this big
 
 	// Your definitions here.
-	data           map[string]string
-	clientSequence map[int64]int64
-	waitChannels   map[int64]chan OpReply // 每一个client 对应一个 用于等待数据的返回对应的channel 发送完毕或等待超时则删除
+	data                    map[string]string
+	clientSequence          map[int64]int64
+	waitChannels            map[int64]chan OpReply // 每一个client 对应一个 用于等待数据的返回对应的channel 发送完毕或等待超时则删除
+	maxWaitChannelsSequence map[int64]int64
 
 	persister    *raft.Persister // 用于持久化数据
 	currentBytes int             // 用于生成快照
 }
 
-// 等待命令
-func (kv *KVServer) waitCmd(cmd Op) OpReply {
-	kv.mu.Lock()
+func max(a, b int64) int64 {
+	if a >= b {
+		return a
+	}
+	return b
+}
+
+func (kv *KVServer) getChannel(cmd *Op) chan OpReply {
+	if ch, ok := kv.waitChannels[cmd.ClientId]; ok {
+		kv.maxWaitChannelsSequence[cmd.ClientId] = max(kv.maxWaitChannelsSequence[cmd.ClientId], cmd.SequenceNum)
+		return ch
+	}
+
 	ch := make(chan OpReply, 1)
 	kv.waitChannels[cmd.ClientId] = ch
+	kv.maxWaitChannelsSequence[cmd.ClientId] = cmd.SequenceNum
+	return ch
+}
+
+// 等待命令
+func (kv *KVServer) waitCmd(cmd *Op) OpReply {
+	kv.mu.Lock()
+	ch := kv.getChannel(cmd)
+
+	// ch := make(chan OpReply, 1)
+	// kv.waitChannels[cmd.ClientId] = ch // !!! 存在问题 如果一个clientId有多个等待命令，就会覆盖
 	kv.mu.Unlock()
 
 	select {
-	case res := <-ch:
+	case res := <-ch: // 覆盖后就接受不到消息 然后一直阻塞 只用一个channel无法标识不同命令，例如 一个clientId有多个等待命令，但是发过来的op 不是当前等待的命令，拒绝 然后只能继续等待应用
+		DPrintf("Server %d receive reply:%v from channel: %v", kv.me, res, ch)
 		if res.CmdType != cmd.CmdType || res.ClientId != cmd.ClientId || res.SequenceNum != cmd.SequenceNum {
 			res.Err = ErrCmd
 		}
 		kv.mu.Lock()
-		delete(kv.waitChannels, cmd.ClientId)
+		if kv.maxWaitChannelsSequence[cmd.ClientId] == cmd.SequenceNum {
+			delete(kv.waitChannels, cmd.ClientId)
+		}
+		// delete(kv.waitChannels, cmd.ClientId)
 		kv.mu.Unlock()
 		return res
-	case <-time.After(100 * time.Millisecond):
+	case <-time.After(300 * time.Millisecond):
 		kv.mu.Lock()
-		delete(kv.waitChannels, cmd.ClientId)
+		if kv.maxWaitChannelsSequence[cmd.ClientId] == cmd.SequenceNum {
+			delete(kv.waitChannels, cmd.ClientId)
+		}
+		// delete(kv.waitChannels, cmd.ClientId)
 		kv.mu.Unlock()
 		res := OpReply{
 			Err: ErrTimeout,
@@ -95,7 +124,7 @@ func (kv *KVServer) Get(args *GetArgs, reply *GetReply) {
 		return
 	}
 	kv.mu.Unlock()
-	cmd := Op{
+	cmd := &Op{
 		ClientId:    args.ClientId,
 		CmdType:     GetCmd,
 		SequenceNum: args.SequenceNum,
@@ -113,66 +142,9 @@ func (kv *KVServer) Get(args *GetArgs, reply *GetReply) {
 
 }
 
-func (kv *KVServer) Put(args *PutAppendArgs, reply *PutAppendReply) {
-	// Your code here.
-	DPrintf("Server %d %s request: key: %s, value: %s, client ID: %d, sequence num: %d", kv.me, args.Op, args.Key, args.Value, args.ClientId, args.SequenceNum)
-	kv.mu.Lock()
-	if args.SequenceNum <= kv.clientSequence[args.ClientId] {
-		reply.Err = OK
-		kv.mu.Unlock()
-		return
-	}
-	kv.mu.Unlock()
-	cmd := Op{
-		ClientId:    args.ClientId,
-		SequenceNum: args.SequenceNum,
-		Key:         args.Key,
-		Value:       args.Value,
-		CmdType:     PutCmd,
-	}
-	_, _, isLeader := kv.rf.Start(cmd)
-	if !isLeader {
-		reply.Err = ErrWrongLeader
-		return
-	}
-	res := kv.waitCmd(cmd)
-	reply.Err = res.Err
-	DPrintf("Server %d %s : key: %s, value: %s, client ID: %d, sequence num: %d, err: %s", kv.me, args.Op, args.Key, args.Value, args.ClientId, args.SequenceNum, reply.Err)
-
-}
-
-func (kv *KVServer) Append(args *PutAppendArgs, reply *PutAppendReply) {
-	// Your code here.
-	DPrintf("Server %d %s request: key: %s, value: %s, client ID: %d, sequence num: %d", kv.me, args.Op, args.Key, args.Value, args.ClientId, args.SequenceNum)
-	kv.mu.Lock()
-	if args.SequenceNum <= kv.clientSequence[args.ClientId] {
-		reply.Err = OK
-		kv.mu.Unlock()
-		return
-	}
-	kv.mu.Unlock()
-	cmd := Op{
-		ClientId:    args.ClientId,
-		SequenceNum: args.SequenceNum,
-		Key:         args.Key,
-		Value:       args.Value,
-		CmdType:     AppendCmd,
-	}
-
-	_, _, isLeader := kv.rf.Start(cmd)
-	if !isLeader {
-		reply.Err = ErrWrongLeader
-		return
-	}
-	res := kv.waitCmd(cmd)
-	reply.Err = res.Err
-	DPrintf("Server %d %s : key: %s, value: %s, client ID: %d, sequence num: %d, err: %s", kv.me, args.Op, args.Key, args.Value, args.ClientId, args.SequenceNum, reply.Err)
-
-}
-
 func (kv *KVServer) PutAppend(args *PutAppendArgs, reply *PutAppendReply) {
 	// Your code here.
-	DPrintf("Server %d %s request: key: %s, value: %s, client ID: %d, sequence num: %d", kv.me, args.Op, args.Key, args.Value, args.ClientId, args.SequenceNum)
+	DPrintf("Server %d %s request: key: %s, value: %s, client ID: %d, sequence num: %d", kv.me, args.OpType, args.Key, args.Value, args.ClientId, args.SequenceNum)
 	kv.mu.Lock()
 	if args.SequenceNum <= kv.clientSequence[args.ClientId] {
 		reply.Err = OK
@@ -180,18 +152,18 @@ func (kv *KVServer) PutAppend(args *PutAppendArgs, reply *PutAppendReply) {
 		return
 	}
 	kv.mu.Unlock()
-	cmd := Op{
+	cmd := &Op{
 		ClientId:    args.ClientId,
 		SequenceNum: args.SequenceNum,
 		Key:         args.Key,
 		Value:       args.Value,
 	}
-	if args.Op == "Put" {
+	if args.OpType == "Put" {
 		cmd.CmdType = PutCmd
-	} else if args.Op == "Append" {
+	} else if args.OpType == "Append" {
 		cmd.CmdType = AppendCmd
 	} else {
-		log.Fatalf("Invalid operation: %s", args.Op)
+		log.Fatalf("Invalid operation: %s", args.OpType)
 		return
 	}
 	_, _, isLeader := kv.rf.Start(cmd)
@@ -201,7 +173,7 @@ func (kv *KVServer) PutAppend(args *PutAppendArgs, reply *PutAppendReply) {
 	}
 	res := kv.waitCmd(cmd)
 	reply.Err = res.Err
-	DPrintf("Server %d %s reply: key: %s, value: %s, client ID: %d, sequence num: %d, err: %s", kv.me, args.Op, args.Key, args.Value, args.ClientId, args.SequenceNum, reply.Err)
+	DPrintf("Server %d %s reply: key: %s, value: %s, client ID: %d, sequence num: %d, err: %s", kv.me, args.OpType, args.Key, args.Value, args.ClientId, args.SequenceNum, reply.Err)
 }
 
 // the tester calls Kill() when a KVServer instance won't
@@ -232,47 +204,41 @@ func (kv *KVServer) isRepeated(clientId, sequenceNum int64) bool {
 	return false
 }
 
+// !!!!! Test: restarts, one client (4A) ... 超时
 func (kv *KVServer) engineStart() {
 	for !kv.killed() {
 		msg := <-kv.applyCh // 命令已经在raft中应用（绝大多数都已经同步日志，达成一致）
 		if msg.CommandValid {
-			op := msg.Command.(Op) // 类型断言
-			clientId := op.ClientId
 			kv.mu.Lock()
+			op := msg.Command.(*Op) // 类型断言
+			clientId := op.ClientId
+
+			if !kv.isRepeated(clientId, op.SequenceNum) { // 重复不做处理
+				if op.CmdType == PutCmd {
+					kv.data[op.Key] = op.Value
+				} else if op.CmdType == AppendCmd {
+					kv.data[op.Key] += op.Value
+				} else {
+
+				}
+				kv.clientSequence[clientId] = op.SequenceNum // !! Test: partitions, one client (4A) 超时
+				ch, ok := kv.waitChannels[clientId]
+				if ok && ch != nil { // 如果客户端还在等待日志应用完成
+					res := OpReply{
+						CmdType:     op.CmdType,
+						ClientId:    op.ClientId,
+						SequenceNum: op.SequenceNum,
+						Err:         OK,
+						Value:       kv.data[op.Key],
+					}
+					DPrintf("Server %d reply: key: %s, client ID: %d, sequence num: %d, err: %s, value: %s to channel:%v", kv.me, op.Key, op.ClientId, op.SequenceNum, res.Err, res.Value, kv.waitChannels[clientId])
+					ch <- res
+				}
+			}
+
 			// unsafe.Sizeof(op) 返回的是 op 结构体的直接内存大小，即包含它所有字段的指针或基本类型所占的空间，但不包括指针指向的实际数据
 			// 所以最后还需要加上字符串的长度，以计算整个 op 的大小
 			kv.currentBytes += int(unsafe.Sizeof(op)) + len(op.Key) + len(op.Value)
-			// 不使用<=的原因 :
-			// 1.保留对等于 SequenceNum 的请求的幂等性检查
-			// 2.SequenceNum 只用来防止旧请求的重复执行
-			if op.SequenceNum < kv.clientSequence[clientId] { // 已经处理过该请求
-				kv.mu.Unlock()
-				continue
-			}
-			if op.CmdType == PutCmd || op.CmdType == AppendCmd {
-				if !kv.isRepeated(clientId, op.SequenceNum) { // 重复不做处理
-					if op.CmdType == PutCmd {
-						kv.data[op.Key] = op.Value
-					} else {
-						kv.data[op.Key] += op.Value
-					}
-				}
-			}
-			if op.SequenceNum > kv.clientSequence[clientId] {
-				kv.clientSequence[clientId] = op.SequenceNum
-			}
-			_, ok := kv.waitChannels[clientId]
-			if ok { // 如果客户端还在等待日志应用完成
-				res := OpReply{
-					CmdType:     op.CmdType,
-					ClientId:    op.ClientId,
-					SequenceNum: op.SequenceNum,
-					Err:         OK,
-					Value:       kv.data[op.Key],
-				}
-				DPrintf("Server %d reply: key: %s, client ID: %d, sequence num: %d, err: %s, value: %s", kv.me, op.Key, op.ClientId, op.SequenceNum, res.Err, res.Value)
-				kv.waitChannels[clientId] <- res
-			}
 
 			if kv.maxraftstate != -1 && kv.persister.RaftStateSize() >= kv.maxraftstate && kv.currentBytes >= kv.maxraftstate {
 				DPrintf("Server %d start snapshot, kv.persister.RaftStateSize(): %v, kv.currentBytes: %v, kv.maxraftstate: %v", kv.me, kv.persister.RaftStateSize(), kv.currentBytes, kv.maxraftstate)
@@ -340,7 +306,7 @@ func (kv *KVServer) readSnapShot(data []byte) {
 func StartKVServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persister, maxraftstate int) *KVServer {
 	// call labgob.Register on structures you want
 	// Go's RPC library to marshall/unmarshall.
-	labgob.Register(Op{}) // 确保 Op 类型在序列化和反序列化时被正确处理
+	labgob.Register(&Op{}) // 确保 Op 类型在序列化和反序列化时被正确处理
 
 	kv := new(KVServer)
 	kv.me = me
@@ -351,6 +317,7 @@ func StartKVServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persiste
 
 	// You may need initialization code here.
 	kv.clientSequence = make(map[int64]int64)
+	kv.maxWaitChannelsSequence = make(map[int64]int64)
 	kv.data = make(map[string]string)
 	kv.waitChannels = make(map[int64]chan OpReply)
 	kv.persister = persister

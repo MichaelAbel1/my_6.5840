@@ -11,9 +11,9 @@ import (
 type Clerk struct {
 	servers []*labrpc.ClientEnd
 	// You will have to modify this struct.
-	clientId    int64
-	leaderId    int64
-	sequenceNum int64
+	clerkId  int64 // the unique id of this clerk.
+	nextOpId int   // the next op id to allocate for an op.
+	leaderId int   // known leader, defaults to the servers[0].
 }
 
 func nrand() int64 {
@@ -27,15 +27,15 @@ func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
 	ck := new(Clerk)
 	ck.servers = servers
 	// You'll have to add code here.
-	ck.clientId = nrand()
+	ck.clerkId = nrand()
 	ck.leaderId = 0
-	ck.sequenceNum = 1
+	ck.nextOpId = 0
 
 	return ck
 }
 
-func (ck *Clerk) GetClientId() int64 {
-	return ck.clientId
+func (ck *Clerk) GetclerkId() int64 {
+	return ck.clerkId
 }
 
 // 找到leaderid
@@ -45,11 +45,11 @@ func (ck *Clerk) GetState() int {
 		reply := IsLeaderReply{}
 		ok := ck.servers[ck.leaderId].Call("KVServer.IsLeader", &args, &reply)
 		if ok && reply.IsLeader {
-			DPrintf("Client %d GetState from %d", ck.clientId, ck.leaderId)
+			DPrintf("Client %d GetState from %d", ck.clerkId, ck.leaderId)
 			return int(ck.leaderId)
 		} else {
 			time.Sleep(100 * time.Millisecond)
-			ck.leaderId = (ck.leaderId + 1) % int64(len(ck.servers))
+			ck.leaderId = (ck.leaderId + 1) % len(ck.servers)
 		}
 	}
 
@@ -68,21 +68,21 @@ func (ck *Clerk) GetState() int {
 func (ck *Clerk) Get(key string) string {
 	// You will have to modify this function.
 	args := GetArgs{
-		Key:         key,
-		ClientId:    ck.clientId,
-		SequenceNum: ck.sequenceNum,
+		Key:     key,
+		ClerkId: ck.clerkId,
+		OpId:    ck.nextOpId,
 	}
 	reply := GetReply{}
 	ok := false
 	for !ok || reply.Err != OK {
 		ck.GetState()
-		DPrintf("Client %d Getting %s from %d", ck.clientId, key, ck.leaderId)
+		DPrintf("Client %d Getting %s from %d", ck.clerkId, key, ck.leaderId)
 		ok = ck.servers[ck.leaderId].Call("KVServer.Get", &args, &reply)
 	}
 	if ok {
-		ck.sequenceNum++
+		ck.nextOpId++
 	}
-	DPrintf("Client %d Return Get %s from %d", ck.clientId, key, ck.leaderId)
+	DPrintf("Client %d Return Get %s from %d", ck.clerkId, key, ck.leaderId)
 	return reply.Value
 }
 
@@ -97,22 +97,22 @@ func (ck *Clerk) Get(key string) string {
 func (ck *Clerk) PutAppend(key string, value string, op string) {
 	// You will have to modify this function.
 	args := PutAppendArgs{
-		Key:         key,
-		Value:       value,
-		OpType:      op,
-		ClientId:    ck.clientId,
-		SequenceNum: ck.sequenceNum,
+		Key:     key,
+		Value:   value,
+		OpType:  op,
+		ClerkId: ck.clerkId,
+		OpId:    ck.nextOpId,
 	}
 
 	reply := PutAppendReply{}
 	ok := false
 	for !ok || reply.Err != OK {
 		ck.GetState()
-		DPrintf("Client %d %s %s %s to %d", ck.clientId, op, key, value, ck.leaderId)
+		DPrintf("Client %d %s %s %s to %d", ck.clerkId, op, key, value, ck.leaderId)
 		ok = ck.servers[ck.leaderId].Call("KVServer.PutAppend", &args, &reply)
 	}
 	if ok {
-		ck.sequenceNum++
+		ck.nextOpId++
 	}
 }
 

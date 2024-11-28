@@ -1,25 +1,24 @@
 package kvraft
 
-const (
-	OK             = "OK"
-	ErrNoKey       = "ErrNoKey"
-	ErrWrongLeader = "ErrWrongLeader"
-	ErrTimeout     = "ErrTimeout"
-	ErrCmd         = "ErrCmd"
+import (
+	"sync"
+	"time"
 )
 
 type Err string
 
-// Put or Append
+const (
+	OK             = "OK"
+	ErrNotApplied  = "ErrNotApplied"
+	ErrWrongLeader = "ErrWrongLeader"
+)
+
 type PutAppendArgs struct {
-	Key   string
-	Value string
-	// You'll have to add definitions here.
-	// Field names must start with capital letters,
-	// otherwise RPC will break.
-	ClientId    int64
-	SequenceNum int64
-	OpType      string
+	ClerkId int64
+	OpId    int
+	OpType  string // "Put" or "Append"
+	Key     string
+	Value   string
 }
 
 type PutAppendReply struct {
@@ -29,8 +28,8 @@ type PutAppendReply struct {
 type GetArgs struct {
 	Key string
 	// You'll have to add definitions here.
-	ClientId    int64
-	SequenceNum int64
+	ClerkId int64
+	OpId    int
 }
 
 type GetReply struct {
@@ -45,9 +44,29 @@ type IsLeaderReply struct {
 	IsLeader bool
 }
 
-const (
-	GetCmd    = 1
-	PutCmd    = 2
-	AppendCmd = 3
-	NoOp      = 4
-)
+// !!  KVServer
+type Op struct {
+	// Your definitions here.
+	// Field names must start with capital letters,
+	// otherwise RPC will break.
+	OpType  string // "Get", "Put", "Append", "NoOp".
+	ClerkId int64
+	OpId    int
+	Key     string
+	Value   string
+}
+
+type OpReply struct {
+	CmdType int8
+	ClerkId int64
+	OpId    int64
+	Err     Err
+	Value   string
+}
+
+type Notifier struct {
+	done              sync.Cond
+	maxRegisteredOpId int
+}
+
+const maxWaitTime = 500 * time.Millisecond

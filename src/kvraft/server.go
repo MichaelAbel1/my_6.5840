@@ -2,37 +2,14 @@ package kvraft
 
 import (
 	"bytes"
-	"log"
-	"os"
-	"runtime/debug"
 	"sync"
 	"sync/atomic"
 	"time"
-	"unsafe"
 
 	"6.5840/labgob"
 	"6.5840/labrpc"
 	"6.5840/raft"
 )
-
-type Op struct {
-	// Your definitions here.
-	// Field names must start with capital letters,
-	// otherwise RPC will break.
-	CmdType     int8
-	ClientId    int64
-	SequenceNum int64
-	Key         string
-	Value       string
-}
-
-type OpReply struct {
-	CmdType     int8
-	ClientId    int64
-	SequenceNum int64
-	Err         Err
-	Value       string
-}
 
 type KVServer struct {
 	mu      sync.Mutex
@@ -44,136 +21,90 @@ type KVServer struct {
 	maxraftstate int // snapshot if log grows this big
 
 	// Your definitions here.
-	data                    map[string]string
-	clientSequence          map[int64]int64
-	waitChannels            map[int64]chan OpReply // 每一个client 对应一个 用于等待数据的返回对应的channel 发送完毕或等待超时则删除
-	maxWaitChannelsSequence map[int64]int64
+	hightWaterEnabled     bool
+	db                    map[string]string
+	maxAppliedOpIdOfClerk map[int64]int       // the maximum op id among all applied ops of each clerk.
+	notifierOfClerk       map[int64]*Notifier // notifier for each clerk.
 
-	persister    *raft.Persister // 用于持久化数据
-	currentBytes int             // 用于生成快照
-}
-
-func max(a, b int64) int64 {
-	if a >= b {
-		return a
-	}
-	return b
-}
-
-func (kv *KVServer) getChannel(cmd *Op) chan OpReply {
-	if ch, ok := kv.waitChannels[cmd.ClientId]; ok {
-		kv.maxWaitChannelsSequence[cmd.ClientId] = max(kv.maxWaitChannelsSequence[cmd.ClientId], cmd.SequenceNum)
-		return ch
-	}
-
-	ch := make(chan OpReply, 1)
-	kv.waitChannels[cmd.ClientId] = ch
-	kv.maxWaitChannelsSequence[cmd.ClientId] = cmd.SequenceNum
-	return ch
-}
-
-// 等待命令
-func (kv *KVServer) waitCmd(cmd *Op) OpReply {
-	kv.mu.Lock()
-	ch := kv.getChannel(cmd)
-
-	// ch := make(chan OpReply, 1)
-	// kv.waitChannels[cmd.ClientId] = ch // !!! 存在问题 如果一个clientId有多个等待命令，就会覆盖
-	kv.mu.Unlock()
-
-	select {
-	case res := <-ch: // 覆盖后就接受不到消息 然后一直阻塞 只用一个channel无法标识不同命令，例如 一个clientId有多个等待命令，但是发过来的op 不是当前等待的命令，拒绝 然后只能继续等待应用
-		DPrintf("Server %d receive reply:%v from channel: %v", kv.me, res, ch)
-		if res.CmdType != cmd.CmdType || res.ClientId != cmd.ClientId || res.SequenceNum != cmd.SequenceNum {
-			res.Err = ErrCmd
-		}
-		kv.mu.Lock()
-		if kv.maxWaitChannelsSequence[cmd.ClientId] == cmd.SequenceNum {
-			delete(kv.waitChannels, cmd.ClientId)
-		}
-		// delete(kv.waitChannels, cmd.ClientId)
-		kv.mu.Unlock()
-		return res
-	case <-time.After(300 * time.Millisecond):
-		kv.mu.Lock()
-		if kv.maxWaitChannelsSequence[cmd.ClientId] == cmd.SequenceNum {
-			delete(kv.waitChannels, cmd.ClientId)
-		}
-		// delete(kv.waitChannels, cmd.ClientId)
-		kv.mu.Unlock()
-		res := OpReply{
-			Err: ErrTimeout,
-		}
-		return res
-	}
-
+	persister *raft.Persister // 用于持久化数据
 }
 
 func (kv *KVServer) IsLeader(args *IsLeaderArgs, reply *IsLeaderReply) {
 	reply.IsLeader = kv.rf.IsLeader()
 }
 
+func (kv *KVServer) propose(op *Op) bool {
+	_, _, isLeader := kv.rf.Start(op)
+	return isLeader
+}
+
+func (kv *KVServer) makeNotifier(op *Op) {
+	kv.getNotifier(op, true)
+	kv.makeAlarm(op)
+}
+
+func (kv *KVServer) makeAlarm(op *Op) {
+	go func() {
+		<-time.After(maxWaitTime)
+		kv.mu.Lock()
+		defer kv.mu.Unlock()
+		kv.notify(op)
+	}()
+}
+
+// 等待op.ClerkId 上的 所有操作都被applied 或者 超时才退出
+func (kv *KVServer) wait(op *Op) {
+	// warning: we could only use `notifier.done.Wait` but there's a risk of spurious wakeup or
+	// wakeup by stale ops.
+	for !kv.killed() {
+		if notifier := kv.getNotifier(op, false); notifier != nil {
+			notifier.done.Wait()
+		} else {
+			break
+		}
+	}
+}
+
+func (kv *KVServer) waitUntilAppliedOrTimeout(op *Op) (Err, string) {
+	kv.mu.Lock()
+	defer kv.mu.Unlock()
+	DPrintf("Server %d waitUntilAppliedOrTimeout: op: %v", kv.me, op)
+	if !kv.isApplied(op) {
+		// 提交操作到raft
+		if !kv.propose(op) {
+			return ErrWrongLeader, ""
+		}
+		// wait until applied or timeout.
+		kv.makeNotifier(op)
+		kv.wait(op)
+	}
+
+	if kv.isApplied(op) {
+		value := ""
+		if op.OpType == "Get" {
+			value = kv.db[op.Key]
+		}
+		return OK, value
+	}
+
+	return ErrNotApplied, ""
+}
+
 func (kv *KVServer) Get(args *GetArgs, reply *GetReply) {
 	// Your code here.
-	DPrintf("Server %d Get request: key: %s, client ID: %d, sequence num: %d", kv.me, args.Key, args.ClientId, args.SequenceNum)
-	kv.mu.Lock()
-	if args.SequenceNum <= kv.clientSequence[args.ClientId] {
-		reply.Value = kv.data[args.Key]
-		reply.Err = OK
-		kv.mu.Unlock()
-		return
-	}
-	kv.mu.Unlock()
-	cmd := &Op{
-		ClientId:    args.ClientId,
-		CmdType:     GetCmd,
-		SequenceNum: args.SequenceNum,
-		Key:         args.Key,
-	}
-	_, _, isLeader := kv.rf.Start(cmd)
-	if !isLeader {
-		reply.Err = ErrWrongLeader
-		return
-	}
-	res := kv.waitCmd(cmd)
-	reply.Value = res.Value
-	reply.Err = res.Err
-	DPrintf("Server %d Get reply: key: %s, client ID: %d, sequence num: %d, err: %s, value: %s", kv.me, args.Key, args.ClientId, args.SequenceNum, reply.Err, reply.Value)
+	DPrintf("Server %d Get request: key: %s, client ID: %d, sequence num: %d", kv.me, args.Key, args.ClerkId, args.OpId)
+	op := &Op{ClerkId: args.ClerkId, OpId: args.OpId, OpType: "Get", Key: args.Key}
+	reply.Err, reply.Value = kv.waitUntilAppliedOrTimeout(op)
+	DPrintf("Server %d Get reply: key: %s, client ID: %d, sequence num: %d, err: %s, value: %s", kv.me, args.Key, args.ClerkId, args.OpId, reply.Err, reply.Value)
 
 }
 
 func (kv *KVServer) PutAppend(args *PutAppendArgs, reply *PutAppendReply) {
 	// Your code here.
-	DPrintf("Server %d %s request: key: %s, value: %s, client ID: %d, sequence num: %d", kv.me, args.OpType, args.Key, args.Value, args.ClientId, args.SequenceNum)
-	kv.mu.Lock()
-	if args.SequenceNum <= kv.clientSequence[args.ClientId] {
-		reply.Err = OK
-		kv.mu.Unlock()
-		return
-	}
-	kv.mu.Unlock()
-	cmd := &Op{
-		ClientId:    args.ClientId,
-		SequenceNum: args.SequenceNum,
-		Key:         args.Key,
-		Value:       args.Value,
-	}
-	if args.OpType == "Put" {
-		cmd.CmdType = PutCmd
-	} else if args.OpType == "Append" {
-		cmd.CmdType = AppendCmd
-	} else {
-		log.Fatalf("Invalid operation: %s", args.OpType)
-		return
-	}
-	_, _, isLeader := kv.rf.Start(cmd)
-	if !isLeader {
-		reply.Err = ErrWrongLeader
-		return
-	}
-	res := kv.waitCmd(cmd)
-	reply.Err = res.Err
-	DPrintf("Server %d %s reply: key: %s, value: %s, client ID: %d, sequence num: %d, err: %s", kv.me, args.OpType, args.Key, args.Value, args.ClientId, args.SequenceNum, reply.Err)
+	DPrintf("Server %d %s request: key: %s, value: %s, client ID: %d, sequence num: %d", kv.me, args.OpType, args.Key, args.Value, args.ClerkId, args.OpId)
+	op := &Op{ClerkId: args.ClerkId, OpId: args.OpId, OpType: args.OpType, Key: args.Key, Value: args.Value}
+	reply.Err, _ = kv.waitUntilAppliedOrTimeout(op)
+	DPrintf("Server %d %s reply: key: %s, value: %s, client ID: %d, sequence num: %d, err: %s", kv.me, args.OpType, args.Key, args.Value, args.ClerkId, args.OpId, reply.Err)
 }
 
 // the tester calls Kill() when a KVServer instance won't
@@ -195,99 +126,104 @@ func (kv *KVServer) killed() bool {
 	return z == 1
 }
 
-func (kv *KVServer) isRepeated(clientId, sequenceNum int64) bool {
-	seq, ok := kv.clientSequence[clientId]
-	if ok && seq >= sequenceNum {
-		DPrintf("Server %v receive repeated cmd from ClientId: %v sequenceNum: %v seq: %v", kv.me, clientId, sequenceNum, seq)
-		return true
-	}
-	return false
+func (kv *KVServer) isApplied(op *Op) bool {
+	maxAppliedId, ok := kv.maxAppliedOpIdOfClerk[op.ClerkId]
+	return ok && op.OpId <= maxAppliedId
 }
 
-// !!!!! Test: restarts, one client (4A) ... 超时
+func (kv *KVServer) applyClientOp(op *Op) {
+	switch op.OpType {
+	case "Put":
+		kv.db[op.Key] = op.Value
+	case "Append":
+		kv.db[op.Key] += op.Value
+	case "Get":
+
+	default:
+		panic("KVServer.applyClientOp: unexpected op type")
+	}
+}
+
+func (kv *KVServer) notify(op *Op) {
+	if notifer := kv.getNotifier(op, false); notifer != nil {
+		// only the latest op can delete the notifier.
+		if op.OpId == notifer.maxRegisteredOpId {
+			delete(kv.notifierOfClerk, op.ClerkId)
+		}
+		notifer.done.Broadcast()
+	}
+}
+
+// 一个notifier对应一个client, 但可能会等待好几个操作
+func (kv *KVServer) getNotifier(op *Op, forced bool) *Notifier {
+	if notifer, ok := kv.notifierOfClerk[op.ClerkId]; ok {
+		notifer.maxRegisteredOpId = max(notifer.maxRegisteredOpId, op.OpId)
+		return notifer
+	}
+
+	if !forced {
+		return nil
+	}
+
+	notifier := new(Notifier)
+	notifier.done = *sync.NewCond(&kv.mu)
+	notifier.maxRegisteredOpId = op.OpId
+	kv.notifierOfClerk[op.ClerkId] = notifier
+
+	return notifier
+}
+
+func (kv *KVServer) maybeApplyClientOp(op *Op) {
+	if !kv.isApplied(op) {
+		kv.applyClientOp(op)
+		// raft已经保证了顺序性和幂等性
+		// 顺序性：操作 op.OpId 总是依次递增，因此无需比较，直接更新即可。
+		// 幂等性：Raft 的日志层已经避免了重复应用操作，因此直接赋值不会出现问题。
+		kv.maxAppliedOpIdOfClerk[op.ClerkId] = op.OpId
+		// 操作已经applied，如果有等待该操作的client，则通知所有等待该op的client
+		kv.notify(op)
+	}
+}
+
+func (kv *KVServer) approachHWLimit() bool {
+	// note: persister has its own mutex and hence no race would be raised with raft.
+	return float32(kv.persister.RaftStateSize()) > 0.8*float32(kv.maxraftstate)
+}
+
+func (kv *KVServer) checkpoint(index int) {
+	snapshot := kv.makeSnapshot()
+	kv.rf.Snapshot(index, snapshot)
+}
+
+func (kv *KVServer) makeSnapshot() []byte {
+	w := new(bytes.Buffer)
+	e := labgob.NewEncoder(w)
+	if e.Encode(kv.db) != nil || e.Encode(kv.maxAppliedOpIdOfClerk) != nil {
+		panic("failed to encode some fields")
+	}
+	return w.Bytes()
+}
+
 func (kv *KVServer) engineStart() {
 	for !kv.killed() {
 		msg := <-kv.applyCh // 命令已经在raft中应用（绝大多数都已经同步日志，达成一致）
+		kv.mu.Lock()
 		if msg.CommandValid {
-			kv.mu.Lock()
-			op := msg.Command.(*Op) // 类型断言
-			clientId := op.ClientId
+			op := msg.Command.(*Op)
+			if op.OpType == "NoOp" {
+				// skip no-ops.
 
-			if !kv.isRepeated(clientId, op.SequenceNum) { // 重复不做处理
-				if op.CmdType == PutCmd {
-					kv.data[op.Key] = op.Value
-				} else if op.CmdType == AppendCmd {
-					kv.data[op.Key] += op.Value
-				} else {
-
-				}
-				kv.clientSequence[clientId] = op.SequenceNum // !! Test: partitions, one client (4A) 超时
-				ch, ok := kv.waitChannels[clientId]
-				if ok && ch != nil { // 如果客户端还在等待日志应用完成
-					res := OpReply{
-						CmdType:     op.CmdType,
-						ClientId:    op.ClientId,
-						SequenceNum: op.SequenceNum,
-						Err:         OK,
-						Value:       kv.data[op.Key],
-					}
-					DPrintf("Server %d reply: key: %s, client ID: %d, sequence num: %d, err: %s, value: %s to channel:%v", kv.me, op.Key, op.ClientId, op.SequenceNum, res.Err, res.Value, kv.waitChannels[clientId])
-					ch <- res
-				}
-			}
-
-			// unsafe.Sizeof(op) 返回的是 op 结构体的直接内存大小，即包含它所有字段的指针或基本类型所占的空间，但不包括指针指向的实际数据
-			// 所以最后还需要加上字符串的长度，以计算整个 op 的大小
-			kv.currentBytes += int(unsafe.Sizeof(op)) + len(op.Key) + len(op.Value)
-
-			if kv.maxraftstate != -1 && kv.persister.RaftStateSize() >= kv.maxraftstate && kv.currentBytes >= kv.maxraftstate {
-				DPrintf("Server %d start snapshot, kv.persister.RaftStateSize(): %v, kv.currentBytes: %v, kv.maxraftstate: %v", kv.me, kv.persister.RaftStateSize(), kv.currentBytes, kv.maxraftstate)
-				snapshot := kv.getSnapShot()
-				kv.currentBytes = 0
-				kv.mu.Unlock()
-				kv.rf.Snapshot(msg.CommandIndex, snapshot)
 			} else {
-				kv.mu.Unlock()
+				kv.maybeApplyClientOp(op)
 			}
 
+			if kv.hightWaterEnabled && kv.approachHWLimit() {
+				kv.checkpoint(msg.CommandIndex)
+			}
 		} else if msg.SnapshotValid {
-			kv.mu.Lock()
-			kv.readSnapShot(msg.Snapshot)
-			kv.mu.Unlock()
+			kv.ingestSnapshot(msg.Snapshot)
 		}
-	}
-}
-
-func (kv *KVServer) getSnapShot() []byte {
-	w := new(bytes.Buffer)
-	e := labgob.NewEncoder(w)
-	e.Encode(kv.clientSequence)
-	e.Encode(kv.data)
-	snapshot := w.Bytes()
-	return snapshot
-}
-
-func (kv *KVServer) readSnapShot(data []byte) {
-	if data == nil || len(data) < 1 {
-		return
-	}
-
-	r := bytes.NewBuffer(data)
-	d := labgob.NewDecoder(r)
-	e_decode_clientseq := d.Decode(&kv.clientSequence)
-	e_decode_data := d.Decode(&kv.data)
-	has_err := false
-	if e_decode_clientseq != nil {
-		has_err = true
-		log.Printf("decode clientseq error %v", e_decode_clientseq)
-	}
-	if e_decode_data != nil {
-		has_err = true
-		log.Printf("decode kv error %v", e_decode_data)
-	}
-	if has_err {
-		debug.PrintStack()
-		os.Exit(-1)
+		kv.mu.Unlock()
 	}
 }
 
@@ -310,22 +246,34 @@ func StartKVServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persiste
 
 	kv := new(KVServer)
 	kv.me = me
+	kv.persister = persister
+	kv.mu = sync.Mutex{}
+
+	// You may need initialization code here.
 	kv.maxraftstate = maxraftstate
+	kv.hightWaterEnabled = maxraftstate != -1
+
+	if kv.hightWaterEnabled && kv.persister.SnapshotSize() > 0 {
+		kv.ingestSnapshot(kv.persister.ReadSnapshot())
+	} else {
+		kv.db = make(map[string]string)
+		kv.maxAppliedOpIdOfClerk = make(map[int64]int)
+	}
+
+	kv.notifierOfClerk = map[int64]*Notifier{}
 
 	kv.applyCh = make(chan raft.ApplyMsg)
 	kv.rf = raft.Make(servers, me, persister, kv.applyCh)
 
-	// You may need initialization code here.
-	kv.clientSequence = make(map[int64]int64)
-	kv.maxWaitChannelsSequence = make(map[int64]int64)
-	kv.data = make(map[string]string)
-	kv.waitChannels = make(map[int64]chan OpReply)
-	kv.persister = persister
-	kv.currentBytes = 0
-
-	kv.readSnapShot(kv.persister.ReadSnapshot())
-
 	go kv.engineStart()
 
 	return kv
+}
+
+func (kv *KVServer) ingestSnapshot(snapshot []byte) {
+	r := bytes.NewBuffer(snapshot)
+	d := labgob.NewDecoder(r)
+	if d.Decode(&kv.db) != nil || d.Decode(&kv.maxAppliedOpIdOfClerk) != nil {
+		panic("failed to decode some fields")
+	}
 }

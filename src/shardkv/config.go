@@ -1,21 +1,25 @@
 package shardkv
 
-import "6.5840/shardctrler"
-import "6.5840/labrpc"
-import "testing"
-import "os"
+import (
+	"os"
+	"testing"
 
-// import "log"
-import crand "crypto/rand"
-import "math/big"
-import "math/rand"
-import "encoding/base64"
-import "sync"
-import "runtime"
-import "6.5840/raft"
-import "strconv"
-import "fmt"
-import "time"
+	"6.5840/labrpc"
+	"6.5840/shardctrler"
+
+	// import "log"
+	crand "crypto/rand"
+	"encoding/base64"
+	"fmt"
+	"math/big"
+	"math/rand"
+	"runtime"
+	"strconv"
+	"sync"
+	"time"
+
+	"6.5840/raft"
+)
 
 func randstring(n int) string {
 	b := make([]byte, 2*n)
@@ -219,7 +223,7 @@ func (cfg *config) StartServer(gi int, i int) {
 		gg.endnames[i][j] = randstring(20)
 	}
 
-	// and the connections to other servers in this group.
+	// and the connections to other servers in this group. 组内服务器相互连接
 	ends := make([]*labrpc.ClientEnd, cfg.n)
 	for j := 0; j < cfg.n; j++ {
 		ends[j] = cfg.net.MakeEnd(gg.endnames[i][j])
@@ -227,7 +231,7 @@ func (cfg *config) StartServer(gi int, i int) {
 		cfg.net.Enable(gg.endnames[i][j], true)
 	}
 
-	// ends to talk to shardctrler service
+	// ends to talk to shardctrler service 组内服务器与所有控制器连接
 	mends := make([]*labrpc.ClientEnd, cfg.ctl.n)
 	gg.mendnames[i] = make([]string, cfg.ctl.n)
 	for j := 0; j < cfg.ctl.n; j++ {
@@ -279,7 +283,7 @@ func (cfg *config) StartCtrlerServer(ctl *ctrler, i int) {
 	for j := 0; j < ctl.n; j++ {
 		endname := randstring(20)
 		ends[j] = cfg.net.MakeEnd(endname)
-		cfg.net.Connect(endname, ctl.ctrlername(j))
+		cfg.net.Connect(endname, ctl.ctrlername(j)) // 建立 ctl.n*ctl.n个不同的endname 使得互相相互通信
 		cfg.net.Enable(endname, true)
 	}
 
@@ -305,7 +309,7 @@ func (cfg *config) ctrlerclerk(ctl *ctrler) *shardctrler.Clerk {
 		cfg.net.Enable(name, true)
 	}
 
-	return shardctrler.MakeClerk(ends)
+	return shardctrler.MakeClerk(ends) // 构造一个shardctrler.Clerk 建立与ShardCtrler的连接
 }
 
 // tell the shardctrler that a group is joining.

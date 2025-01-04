@@ -1,0 +1,1231 @@
+Test (5B): servers miss configuration changes...
+2025/01/04 13:02:33 {Node 0}{Group 100} started
+2025/01/04 13:02:33 {Node 1}{Group 100} started
+2025/01/04 13:02:33 {Node 2}{Group 100} started
+2025/01/04 13:02:33 {Node 0}{Group 101} started
+2025/01/04 13:02:33 {Node 1}{Group 101} started
+2025/01/04 13:02:33 {Node 2}{Group 101} started
+2025/01/04 13:02:33 {Node 0}{Group 102} started
+2025/01/04 13:02:33 {Node 1}{Group 102} started
+2025/01/04 13:02:33 {Node 2}{Group 102} started
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 1 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: EmptyShards, Data: <nil>} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 1 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 1 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 101} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 1 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 101} Execute Command Command{commandType: EmptyShards, Data: <nil>} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 101} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 1 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 101} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 1 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 102} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 1 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 102} Execute Command Command{commandType: EmptyShards, Data: <nil>} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 102} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 1 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 102} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 1 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 101} fetches latest configuration {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]} when currentConfigNum is 0
+2025/01/04 13:02:34 {Node 0}{Group 100} fetches latest configuration {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]} when currentConfigNum is 0
+2025/01/04 13:02:34 {Node 0}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} 2 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 101} updates currentConfig from {Num:0,Shards:[0 0 0 0 0 0 0 0 0 0],Groups:map[]} to {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:34 {Node 0}{Group 101} Execute Command Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} 2 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 2}{Group 101} updates currentConfig from {Num:0,Shards:[0 0 0 0 0 0 0 0 0 0],Groups:map[]} to {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:34 {Node 1}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} 2 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 101} updates currentConfig from {Num:0,Shards:[0 0 0 0 0 0 0 0 0 0],Groups:map[]} to {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:34 {Node 0}{Group 102} fetches latest configuration {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]} when currentConfigNum is 0
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} 2 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} updates currentConfig from {Num:0,Shards:[0 0 0 0 0 0 0 0 0 0],Groups:map[]} to {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} 2 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} updates currentConfig from {Num:0,Shards:[0 0 0 0 0 0 0 0 0 0],Groups:map[]} to {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} 2 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 2}{Group 100} updates currentConfig from {Num:0,Shards:[0 0 0 0 0 0 0 0 0 0],Groups:map[]} to {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:34 {Node 0}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} 2 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 102} updates currentConfig from {Num:0,Shards:[0 0 0 0 0 0 0 0 0 0],Groups:map[]} to {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:34 {Node 0}{Group 102} Execute Command Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} 2 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 2}{Group 102} updates currentConfig from {Num:0,Shards:[0 0 0 0 0 0 0 0 0 0],Groups:map[]} to {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:34 {Node 1}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}} 2 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 102} updates currentConfig from {Num:0,Shards:[0 0 0 0 0 0 0 0 0 0],Groups:map[]} to {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {0 ynDagi9hjDX-3dNFobHA Put 2739519657419126787 0}} 3 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {0 ynDagi9hjDX-3dNFobHA Put 2739519657419126787 0}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {0 ynDagi9hjDX-3dNFobHA Put 2739519657419126787 0}} 3 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {0 ynDagi9hjDX-3dNFobHA Put 2739519657419126787 0}} 3 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {1 CcUqGKpQDtN03020-efC Put 2739519657419126787 1}} 4 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {1 CcUqGKpQDtN03020-efC Put 2739519657419126787 1}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {1 CcUqGKpQDtN03020-efC Put 2739519657419126787 1}} 4 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {1 CcUqGKpQDtN03020-efC Put 2739519657419126787 1}} 4 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {2 MzrGptj6RVLloOJnALrL Put 2739519657419126787 2}} 5 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {2 MzrGptj6RVLloOJnALrL Put 2739519657419126787 2}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {2 MzrGptj6RVLloOJnALrL Put 2739519657419126787 2}} 5 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {2 MzrGptj6RVLloOJnALrL Put 2739519657419126787 2}} 5 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {3 9YGBEYDYq7tfksnYfrYK Put 2739519657419126787 3}} 6 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {3 9YGBEYDYq7tfksnYfrYK Put 2739519657419126787 3}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {3 9YGBEYDYq7tfksnYfrYK Put 2739519657419126787 3}} 6 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {3 9YGBEYDYq7tfksnYfrYK Put 2739519657419126787 3}} 6 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {4 dqBWZKxt0lh6jbbyNoel Put 2739519657419126787 4}} 7 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {4 dqBWZKxt0lh6jbbyNoel Put 2739519657419126787 4}} 7 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {4 dqBWZKxt0lh6jbbyNoel Put 2739519657419126787 4}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {4 dqBWZKxt0lh6jbbyNoel Put 2739519657419126787 4}} 7 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {5 Xq71rAhhsqtNrwEuPlHF Put 2739519657419126787 5}} 8 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {5 Xq71rAhhsqtNrwEuPlHF Put 2739519657419126787 5}} 8 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {5 Xq71rAhhsqtNrwEuPlHF Put 2739519657419126787 5}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {5 Xq71rAhhsqtNrwEuPlHF Put 2739519657419126787 5}} 8 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {6 zdQX7C9XpVGGTmPV5oJ6 Put 2739519657419126787 6}} 9 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {6 zdQX7C9XpVGGTmPV5oJ6 Put 2739519657419126787 6}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {6 zdQX7C9XpVGGTmPV5oJ6 Put 2739519657419126787 6}} 9 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {6 zdQX7C9XpVGGTmPV5oJ6 Put 2739519657419126787 6}} 9 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {7 nYqI0dm8_9JMFmQcFmGx Put 2739519657419126787 7}} 10 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {7 nYqI0dm8_9JMFmQcFmGx Put 2739519657419126787 7}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {7 nYqI0dm8_9JMFmQcFmGx Put 2739519657419126787 7}} 10 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {7 nYqI0dm8_9JMFmQcFmGx Put 2739519657419126787 7}} 10 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {8 ep7Ku_iFxmXuNkupnpCK Put 2739519657419126787 8}} 11 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {8 ep7Ku_iFxmXuNkupnpCK Put 2739519657419126787 8}} 11 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {8 ep7Ku_iFxmXuNkupnpCK Put 2739519657419126787 8}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {8 ep7Ku_iFxmXuNkupnpCK Put 2739519657419126787 8}} 11 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {9 uLp-jSb34BeR5T1bZtEo Put 2739519657419126787 9}} 12 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {9 uLp-jSb34BeR5T1bZtEo Put 2739519657419126787 9}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {9 uLp-jSb34BeR5T1bZtEo Put 2739519657419126787 9}} 12 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {9 uLp-jSb34BeR5T1bZtEo Put 2739519657419126787 9}} 12 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {0  Get 2739519657419126787 10}} 13 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {0  Get 2739519657419126787 10}} with CommandReply CommandReply{Err: OK, Value: ynDagi9hjDX-3dNFobHA}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {0  Get 2739519657419126787 10}} 13 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {0  Get 2739519657419126787 10}} 13 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {1  Get 2739519657419126787 11}} 14 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {1  Get 2739519657419126787 11}} with CommandReply CommandReply{Err: OK, Value: CcUqGKpQDtN03020-efC}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {1  Get 2739519657419126787 11}} 14 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {1  Get 2739519657419126787 11}} 14 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {2  Get 2739519657419126787 12}} 15 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {2  Get 2739519657419126787 12}} with CommandReply CommandReply{Err: OK, Value: MzrGptj6RVLloOJnALrL}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {2  Get 2739519657419126787 12}} 15 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {2  Get 2739519657419126787 12}} 15 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {3  Get 2739519657419126787 13}} 16 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {3  Get 2739519657419126787 13}} with CommandReply CommandReply{Err: OK, Value: 9YGBEYDYq7tfksnYfrYK}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {3  Get 2739519657419126787 13}} 16 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {3  Get 2739519657419126787 13}} 16 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {4  Get 2739519657419126787 14}} 17 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {4  Get 2739519657419126787 14}} with CommandReply CommandReply{Err: OK, Value: dqBWZKxt0lh6jbbyNoel}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {4  Get 2739519657419126787 14}} 17 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {4  Get 2739519657419126787 14}} 17 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {5  Get 2739519657419126787 15}} 18 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {5  Get 2739519657419126787 15}} with CommandReply CommandReply{Err: OK, Value: Xq71rAhhsqtNrwEuPlHF}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {5  Get 2739519657419126787 15}} 18 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {5  Get 2739519657419126787 15}} 18 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {6  Get 2739519657419126787 16}} 19 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {6  Get 2739519657419126787 16}} with CommandReply CommandReply{Err: OK, Value: zdQX7C9XpVGGTmPV5oJ6}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {6  Get 2739519657419126787 16}} 19 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {6  Get 2739519657419126787 16}} 19 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {7  Get 2739519657419126787 17}} 20 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {7  Get 2739519657419126787 17}} with CommandReply CommandReply{Err: OK, Value: nYqI0dm8_9JMFmQcFmGx}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {7  Get 2739519657419126787 17}} 20 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {7  Get 2739519657419126787 17}} 20 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {8  Get 2739519657419126787 18}} 21 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {8  Get 2739519657419126787 18}} 21 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {8  Get 2739519657419126787 18}} 21 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {8  Get 2739519657419126787 18}} with CommandReply CommandReply{Err: OK, Value: ep7Ku_iFxmXuNkupnpCK}
+2025/01/04 13:02:34 {Node 0}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {9  Get 2739519657419126787 19}} 22 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 0}{Group 100} Execute Command Command{commandType: Operation, Data: {9  Get 2739519657419126787 19}} with CommandReply CommandReply{Err: OK, Value: uLp-jSb34BeR5T1bZtEo}
+2025/01/04 13:02:34 {Node 2}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {9  Get 2739519657419126787 19}} 22 1 false [] 0 0}
+2025/01/04 13:02:34 {Node 1}{Group 100} tries to apply message {true Command{commandType: Operation, Data: {9  Get 2739519657419126787 19}} 22 1 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 100} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 23 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 100} Execute Command Command{commandType: EmptyShards, Data: <nil>} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 2}{Group 100} tries to apply message {true Command{commandType: EmptyShards, Data: <nil>} 23 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 100} fetches latest configuration {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]} when currentConfigNum is 1
+2025/01/04 13:02:35 {Node 1}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}} 24 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 100} updates currentConfig from {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]} to {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} Execute Command Command{commandType: Configuration, Data: {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 2}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}} 24 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 100} updates currentConfig from {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]} to {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} fetches latest configuration {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]} when currentConfigNum is 1
+2025/01/04 13:02:35 {Node 1}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}} 3 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 101} updates currentConfig from {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]} to {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}} 3 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 101} Execute Command Command{commandType: Configuration, Data: {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 2}{Group 101} updates currentConfig from {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]} to {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} starts a PullTask to get shards [3 4 0 2 1] from group 100 when config is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} will not try to fetch latest configuration because shards status are map[0:0xc0001625c0 1:0xc0001625d0 2:0xc0001625e0 3:0xc0001625f0 4:0xc000162600 5:0xc000162610 6:0xc000162620 7:0xc000162630 8:0xc000162640 9:0xc000162650] when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} processes PullTaskRequest ShardOperationArgs{ConfigNum: 2, ShardIDs: [3 4 0 2 1]} with PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 2, Shards: map[0:map[2:MzrGptj6RVLloOJnALrL] 1:map[3:9YGBEYDYq7tfksnYfrYK] 2:map[4:dqBWZKxt0lh6jbbyNoel] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}
+2025/01/04 13:02:35 {Node 1}{Group 101} gets a PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 2, Shards: map[0:map[2:MzrGptj6RVLloOJnALrL] 1:map[3:9YGBEYDYq7tfksnYfrYK] 2:map[4:dqBWZKxt0lh6jbbyNoel] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} and tries to commit it when currentConfigNum is 2
+2025/01/04 13:02:35 {Node 1}{Group 101} tries to apply message {true Command{commandType: InsertShards, Data: {OK 2 map[0:map[2:MzrGptj6RVLloOJnALrL] 1:map[3:9YGBEYDYq7tfksnYfrYK] 2:map[4:dqBWZKxt0lh6jbbyNoel] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 4 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 101} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 2, Shards: map[0:map[2:MzrGptj6RVLloOJnALrL] 1:map[3:9YGBEYDYq7tfksnYfrYK] 2:map[4:dqBWZKxt0lh6jbbyNoel] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 101} tries to apply message {true Command{commandType: InsertShards, Data: {OK 2 map[0:map[2:MzrGptj6RVLloOJnALrL] 1:map[3:9YGBEYDYq7tfksnYfrYK] 2:map[4:dqBWZKxt0lh6jbbyNoel] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 4 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 101} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 2, Shards: map[0:map[2:MzrGptj6RVLloOJnALrL] 1:map[3:9YGBEYDYq7tfksnYfrYK] 2:map[4:dqBWZKxt0lh6jbbyNoel] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} Execute Command Command{commandType: InsertShards, Data: {OK 2 map[0:map[2:MzrGptj6RVLloOJnALrL] 1:map[3:9YGBEYDYq7tfksnYfrYK] 2:map[4:dqBWZKxt0lh6jbbyNoel] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} with CommandReply CommandReply{Err: , Value: }
+2025/01/04 13:02:35 {Node 1}{Group 101} starts a GCTask to delete shards [1 2 0 3 4] from group 100 when config is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} will not try to fetch latest configuration because shards status are map[0:0xc000163150 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} will not try to fetch latest configuration because shards status are map[0:0xc0001625c0 1:0xc0001625d0 2:0xc0001625e0 3:0xc0001625f0 4:0xc000162600 5:0xc000162610 6:0xc000162620 7:0xc000162630 8:0xc000162640 9:0xc000162650] when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} fetches latest configuration {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]} when currentConfigNum is 1
+2025/01/04 13:02:35 {Node 1}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {2 [1 2 0 3 4]}} 25 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}} 3 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 100}'s shards status are map[0:0xc0001625c0 1:0xc0001625d0 2:0xc0001625e0 3:0xc0001625f0 4:0xc000162600 5:0xc000162610 6:0xc000162620 7:0xc000162630 8:0xc000162640 9:0xc000162650] before accepting shards deletion ShardOperationArgs{ConfigNum: 2, ShardIDs: [1 2 0 3 4]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} updates currentConfig from {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]} to {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100}'s shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc000162610 6:0xc000162620 7:0xc000162630 8:0xc000162640 9:0xc000162650] after accepting shards deletion ShardOperationArgs{ConfigNum: 2, ShardIDs: [1 2 0 3 4]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} Execute Command Command{commandType: DeleteShards, Data: {2 [1 2 0 3 4]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 2}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {2 [1 2 0 3 4]}} 25 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 100}'s shards status are map[0:0xc0001629b0 1:0xc0001629c0 2:0xc0001629d0 3:0xc0001629e0 4:0xc0001629f0 5:0xc000162a00 6:0xc000162a10 7:0xc000162a20 8:0xc000162a30 9:0xc000162a40] before accepting shards deletion ShardOperationArgs{ConfigNum: 2, ShardIDs: [1 2 0 3 4]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 100}'s shards status are map[0:0xc0004c4c90 1:0xc0004c4c70 2:0xc0004c4c80 3:0xc0004c4ca0 4:0xc0004c4cb0 5:0xc000162a00 6:0xc000162a10 7:0xc000162a20 8:0xc000162a30 9:0xc000162a40] after accepting shards deletion ShardOperationArgs{ConfigNum: 2, ShardIDs: [1 2 0 3 4]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} processes GCTaskRequest ShardOperationArgs{ConfigNum: 2, ShardIDs: [1 2 0 3 4]} with GCTaskReply ShardOperationReply{Err: OK, ConfigNum: 0, Shards: map[], LastOperations: map[]}
+2025/01/04 13:02:35 {Node 2}{Group 102} Execute Command Command{commandType: Configuration, Data: {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 1}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}} 3 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 102} updates currentConfig from {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]} to {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} deletes shards [1 2 0 3 4] in remote group successfully when currentConfigNum is 2
+2025/01/04 13:02:35 {Node 1}{Group 101} will not try to fetch latest configuration because shards status are map[0:0xc000163150 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {2 [1 2 0 3 4]}} 5 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 101}'s shards status are map[0:0xc000163150 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] before accepting shards deletion ShardOperationArgs{ConfigNum: 2, ShardIDs: [1 2 0 3 4]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101}'s shards status are map[0:0xc000163150 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] after accepting shards deletion ShardOperationArgs{ConfigNum: 2, ShardIDs: [1 2 0 3 4]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} Execute Command Command{commandType: DeleteShards, Data: {2 [1 2 0 3 4]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 2}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {2 [1 2 0 3 4]}} 5 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 101}'s shards status are map[0:0xc000163520 1:0xc000163530 2:0xc000163540 3:0xc000163550 4:0xc000163560 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] before accepting shards deletion ShardOperationArgs{ConfigNum: 2, ShardIDs: [1 2 0 3 4]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 101}'s shards status are map[0:0xc000163520 1:0xc000163530 2:0xc000163540 3:0xc000163550 4:0xc000163560 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] after accepting shards deletion ShardOperationArgs{ConfigNum: 2, ShardIDs: [1 2 0 3 4]} when currentConfig is {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} fetches latest configuration {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 2
+2025/01/04 13:02:35 {Node 1}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 26 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 100} updates currentConfig from {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]} to {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} Execute Command Command{commandType: Configuration, Data: {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 2}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 26 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 100} updates currentConfig from {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]} to {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} fetches latest configuration {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 2
+2025/01/04 13:02:35 {Node 2}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 4 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 102} updates currentConfig from {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]} to {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} Execute Command Command{commandType: Configuration, Data: {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 1}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 4 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 102} updates currentConfig from {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]} to {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} fetches latest configuration {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 2
+2025/01/04 13:02:35 {Node 2}{Group 102} starts a PullTask to get shards [0] from group 101 when config is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} starts a PullTask to get shards [5 6] from group 100 when config is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 6 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 101} updates currentConfig from {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]} to {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} Execute Command Command{commandType: Configuration, Data: {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 2}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 6 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 101} updates currentConfig from {Num:2,Shards:[101 101 101 101 101 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2]]} to {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} will not try to fetch latest configuration because shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc000162610 6:0xc000162620 7:0xc000162630 8:0xc000162640 9:0xc000162650] when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} processes PullTaskRequest ShardOperationArgs{ConfigNum: 3, ShardIDs: [5 6]} with PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 3, Shards: map[5:map[7:nYqI0dm8_9JMFmQcFmGx] 6:map[8:ep7Ku_iFxmXuNkupnpCK]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}
+2025/01/04 13:02:35 {Node 2}{Group 102} gets a PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 3, Shards: map[5:map[7:nYqI0dm8_9JMFmQcFmGx] 6:map[8:ep7Ku_iFxmXuNkupnpCK]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} and tries to commit it when currentConfigNum is 3
+2025/01/04 13:02:35 {Node 2}{Group 102} tries to apply message {true Command{commandType: InsertShards, Data: {OK 3 map[5:map[7:nYqI0dm8_9JMFmQcFmGx] 6:map[8:ep7Ku_iFxmXuNkupnpCK]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 5 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 102} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 3, Shards: map[5:map[7:nYqI0dm8_9JMFmQcFmGx] 6:map[8:ep7Ku_iFxmXuNkupnpCK]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} Execute Command Command{commandType: InsertShards, Data: {OK 3 map[5:map[7:nYqI0dm8_9JMFmQcFmGx] 6:map[8:ep7Ku_iFxmXuNkupnpCK]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} with CommandReply CommandReply{Err: , Value: }
+2025/01/04 13:02:35 {Node 1}{Group 102} tries to apply message {true Command{commandType: InsertShards, Data: {OK 3 map[5:map[7:nYqI0dm8_9JMFmQcFmGx] 6:map[8:ep7Ku_iFxmXuNkupnpCK]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 5 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 102} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 3, Shards: map[5:map[7:nYqI0dm8_9JMFmQcFmGx] 6:map[8:ep7Ku_iFxmXuNkupnpCK]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} will not try to fetch latest configuration because shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} processes PullTaskRequest ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} with PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 3, Shards: map[0:map[2:MzrGptj6RVLloOJnALrL]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}
+2025/01/04 13:02:35 {Node 2}{Group 102} gets a PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 3, Shards: map[0:map[2:MzrGptj6RVLloOJnALrL]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} and tries to commit it when currentConfigNum is 3
+2025/01/04 13:02:35 {Node 2}{Group 102} starts a GCTask to delete shards [6 5] from group 100 when config is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} tries to apply message {true Command{commandType: InsertShards, Data: {OK 3 map[0:map[2:MzrGptj6RVLloOJnALrL]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 6 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 102} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 3, Shards: map[0:map[2:MzrGptj6RVLloOJnALrL]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} Execute Command Command{commandType: InsertShards, Data: {OK 3 map[0:map[2:MzrGptj6RVLloOJnALrL]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} with CommandReply CommandReply{Err: , Value: }
+2025/01/04 13:02:35 {Node 1}{Group 102} tries to apply message {true Command{commandType: InsertShards, Data: {OK 3 map[0:map[2:MzrGptj6RVLloOJnALrL]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 6 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 102} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 3, Shards: map[0:map[2:MzrGptj6RVLloOJnALrL]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} will not try to fetch latest configuration because shards status are map[0:0xc000163150 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} will not try to fetch latest configuration because shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc000162610 6:0xc000162620 7:0xc000162630 8:0xc000162640 9:0xc000162650] when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {3 [6 5]}} 27 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 100}'s shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc000162610 6:0xc000162620 7:0xc000162630 8:0xc000162640 9:0xc000162650] before accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [6 5]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100}'s shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc0001f94e0 6:0xc0001f94d0 7:0xc000162630 8:0xc000162640 9:0xc000162650] after accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [6 5]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} Execute Command Command{commandType: DeleteShards, Data: {3 [6 5]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 1}{Group 100} processes GCTaskRequest ShardOperationArgs{ConfigNum: 3, ShardIDs: [6 5]} with GCTaskReply ShardOperationReply{Err: OK, ConfigNum: 0, Shards: map[], LastOperations: map[]}
+2025/01/04 13:02:35 {Node 2}{Group 102} deletes shards [6 5] in remote group successfully when currentConfigNum is 3
+2025/01/04 13:02:35 {Node 2}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {3 [6 5]}} 27 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 100}'s shards status are map[0:0xc0004c4c90 1:0xc0004c4c70 2:0xc0004c4c80 3:0xc0004c4ca0 4:0xc0004c4cb0 5:0xc000162a00 6:0xc000162a10 7:0xc000162a20 8:0xc000162a30 9:0xc000162a40] before accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [6 5]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 100}'s shards status are map[0:0xc0004c4c90 1:0xc0004c4c70 2:0xc0004c4c80 3:0xc0004c4ca0 4:0xc0004c4cb0 5:0xc000387740 6:0xc000387730 7:0xc000162a20 8:0xc000162a30 9:0xc000162a40] after accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [6 5]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} will not try to fetch latest configuration because shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {3 [6 5]}} 7 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {3 [6 5]}} 7 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 102}'s shards status are map[0:0xc000163cc0 1:0xc000163cd0 2:0xc000163ce0 3:0xc000163cf0 4:0xc000163d00 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] before accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [6 5]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 102}'s shards status are map[0:0xc000163cc0 1:0xc000163cd0 2:0xc000163ce0 3:0xc000163cf0 4:0xc000163d00 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] after accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [6 5]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102}'s shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] before accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [6 5]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102}'s shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] after accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [6 5]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} Execute Command Command{commandType: DeleteShards, Data: {3 [6 5]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 1}{Group 101} will not try to fetch latest configuration because shards status are map[0:0xc000163150 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} starts a GCTask to delete shards [0] from group 101 when config is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} fetches latest configuration {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 3
+2025/01/04 13:02:35 {Node 1}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}} 28 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 100} updates currentConfig from {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} Execute Command Command{commandType: Configuration, Data: {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 2}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}} 28 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 100} updates currentConfig from {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} will not try to fetch latest configuration because shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {3 [0]}} 7 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 101}'s shards status are map[0:0xc000163150 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] before accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101}'s shards status are map[0:0xc000320590 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] after accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} Execute Command Command{commandType: DeleteShards, Data: {3 [0]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 1}{Group 101} processes GCTaskRequest ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} with GCTaskReply ShardOperationReply{Err: OK, ConfigNum: 0, Shards: map[], LastOperations: map[]}
+2025/01/04 13:02:35 {Node 2}{Group 102} deletes shards [0] in remote group successfully when currentConfigNum is 3
+2025/01/04 13:02:35 {Node 2}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {3 [0]}} 7 2 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 101}'s shards status are map[0:0xc000163520 1:0xc000163530 2:0xc000163540 3:0xc000163550 4:0xc000163560 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] before accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 101}'s shards status are map[0:0xc0003209b0 1:0xc000163530 2:0xc000163540 3:0xc000163550 4:0xc000163560 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] after accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 100} starts a PullTask to get shards [1 3] from group 101 when config is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {3 [0]}} 8 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 2}{Group 102}'s shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] before accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102}'s shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] after accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 2}{Group 102} Execute Command Command{commandType: DeleteShards, Data: {3 [0]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:35 {Node 1}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {3 [0]}} 8 3 false [] 0 0}
+2025/01/04 13:02:35 {Node 1}{Group 102}'s shards status are map[0:0xc000163cc0 1:0xc000163cd0 2:0xc000163ce0 3:0xc000163cf0 4:0xc000163d00 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] before accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 102}'s shards status are map[0:0xc000163cc0 1:0xc000163cd0 2:0xc000163ce0 3:0xc000163cf0 4:0xc000163d00 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] after accepting shards deletion ShardOperationArgs{ConfigNum: 3, ShardIDs: [0]} when currentConfig is {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:35 {Node 1}{Group 101} processes PullTaskRequest ShardOperationArgs{ConfigNum: 4, ShardIDs: [1 3]} with PullTaskReply ShardOperationReply{Err: ErrNotReady, ConfigNum: 0, Shards: map[], LastOperations: map[]}
+2025/01/04 13:02:36 {Node 1}{Group 101} fetches latest configuration {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 3
+2025/01/04 13:02:36 {Node 1}{Group 100} will not try to fetch latest configuration because shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc0001f94e0 6:0xc0001f94d0 7:0xc000162630 8:0xc000162640 9:0xc000162650] when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}} 8 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 101} updates currentConfig from {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} Execute Command Command{commandType: Configuration, Data: {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 2}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}} 8 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 101} updates currentConfig from {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} starts a PullTask to get shards [3 1] from group 101 when config is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} fetches latest configuration {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 3
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}} 9 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} updates currentConfig from {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: Configuration, Data: {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}} 9 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 102} updates currentConfig from {Num:3,Shards:[102 101 101 101 101 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} processes PullTaskRequest ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} with PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 4, Shards: map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}
+2025/01/04 13:02:36 {Node 1}{Group 100} gets a PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 4, Shards: map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} and tries to commit it when currentConfigNum is 4
+2025/01/04 13:02:36 {Node 1}{Group 100} tries to apply message {true Command{commandType: InsertShards, Data: {OK 4 map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 29 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 100} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 4, Shards: map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} Execute Command Command{commandType: InsertShards, Data: {OK 4 map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} with CommandReply CommandReply{Err: , Value: }
+2025/01/04 13:02:36 {Node 2}{Group 100} tries to apply message {true Command{commandType: InsertShards, Data: {OK 4 map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 29 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 100} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 4, Shards: map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} starts a GCTask to delete shards [3 1] from group 101 when config is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} starts a PullTask to get shards [2 4] from group 101 when config is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} will not try to fetch latest configuration because shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc0001f94e0 6:0xc0001f94d0 7:0xc000162630 8:0xc000162640 9:0xc000162650] when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} will not try to fetch latest configuration because shards status are map[0:0xc000320590 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {4 [3 1]}} 9 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 101}'s shards status are map[0:0xc000320590 1:0xc000163160 2:0xc000163170 3:0xc000163180 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] before accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101}'s shards status are map[0:0xc000320590 1:0xc0001b2690 2:0xc000163170 3:0xc0001b2680 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] after accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} Execute Command Command{commandType: DeleteShards, Data: {4 [3 1]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 101} processes GCTaskRequest ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} with GCTaskReply ShardOperationReply{Err: OK, ConfigNum: 0, Shards: map[], LastOperations: map[]}
+2025/01/04 13:02:36 {Node 2}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {4 [3 1]}} 9 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 101}'s shards status are map[0:0xc0003209b0 1:0xc000163530 2:0xc000163540 3:0xc000163550 4:0xc000163560 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] before accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 101}'s shards status are map[0:0xc0003209b0 1:0xc00039a350 2:0xc000163540 3:0xc00039a340 4:0xc000163560 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] after accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} deletes shards [3 1] in remote group successfully when currentConfigNum is 4
+2025/01/04 13:02:36 {Node 1}{Group 101} processes PullTaskRequest ShardOperationArgs{ConfigNum: 4, ShardIDs: [2 4]} with PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 4, Shards: map[2:map[4:dqBWZKxt0lh6jbbyNoel] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}
+2025/01/04 13:02:36 {Node 2}{Group 102} gets a PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 4, Shards: map[2:map[4:dqBWZKxt0lh6jbbyNoel] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} and tries to commit it when currentConfigNum is 4
+2025/01/04 13:02:36 {Node 2}{Group 102} will not try to fetch latest configuration because shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {4 [3 1]}} 30 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 100}'s shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc0001f94e0 6:0xc0001f94d0 7:0xc000162630 8:0xc000162640 9:0xc000162650] before accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100}'s shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc0001f94e0 6:0xc0001f94d0 7:0xc000162630 8:0xc000162640 9:0xc000162650] after accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} Execute Command Command{commandType: DeleteShards, Data: {4 [3 1]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 2}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {4 [3 1]}} 30 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 100}'s shards status are map[0:0xc0004c4c90 1:0xc0004c4c70 2:0xc0004c4c80 3:0xc0004c4ca0 4:0xc0004c4cb0 5:0xc000387740 6:0xc000387730 7:0xc000162a20 8:0xc000162a30 9:0xc000162a40] before accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 100}'s shards status are map[0:0xc0004c4c90 1:0xc0004c4c70 2:0xc0004c4c80 3:0xc0004c4ca0 4:0xc0004c4cb0 5:0xc000387740 6:0xc000387730 7:0xc000162a20 8:0xc000162a30 9:0xc000162a40] after accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} fetches latest configuration {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 4
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: InsertShards, Data: {OK 4 map[2:map[4:dqBWZKxt0lh6jbbyNoel] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 10 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 4, Shards: map[2:map[4:dqBWZKxt0lh6jbbyNoel] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: InsertShards, Data: {OK 4 map[2:map[4:dqBWZKxt0lh6jbbyNoel] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} with CommandReply CommandReply{Err: , Value: }
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: InsertShards, Data: {OK 4 map[2:map[4:dqBWZKxt0lh6jbbyNoel] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 10 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 102} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 4, Shards: map[2:map[4:dqBWZKxt0lh6jbbyNoel] 4:map[6:zdQX7C9XpVGGTmPV5oJ6]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} starts a GCTask to delete shards [4 2] from group 101 when config is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} 31 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 100} updates currentConfig from {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} Execute Command Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 101} will not try to fetch latest configuration because shards status are map[0:0xc000320590 1:0xc0001b2690 2:0xc000163170 3:0xc0001b2680 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} 31 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 100} updates currentConfig from {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {4 [4 2]}} 10 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 101}'s shards status are map[0:0xc000320590 1:0xc0001b2690 2:0xc000163170 3:0xc0001b2680 4:0xc000163190 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] before accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [4 2]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101}'s shards status are map[0:0xc000320590 1:0xc0001b2690 2:0xc0004c40c0 3:0xc0001b2680 4:0xc0004c40b0 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] after accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [4 2]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {4 [4 2]}} 10 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 101}'s shards status are map[0:0xc0003209b0 1:0xc00039a350 2:0xc000163540 3:0xc00039a340 4:0xc000163560 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] before accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [4 2]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 101}'s shards status are map[0:0xc0003209b0 1:0xc00039a350 2:0xc0001f8090 3:0xc00039a340 4:0xc0001f8080 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] after accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [4 2]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} Execute Command Command{commandType: DeleteShards, Data: {4 [4 2]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 101} processes GCTaskRequest ShardOperationArgs{ConfigNum: 4, ShardIDs: [4 2]} with GCTaskReply ShardOperationReply{Err: OK, ConfigNum: 0, Shards: map[], LastOperations: map[]}
+2025/01/04 13:02:36 {Node 2}{Group 102} deletes shards [4 2] in remote group successfully when currentConfigNum is 4
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {4 [4 2]}} 11 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102}'s shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] before accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [4 2]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102}'s shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] after accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [4 2]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: DeleteShards, Data: {4 [4 2]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {4 [4 2]}} 11 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 102}'s shards status are map[0:0xc000163cc0 1:0xc000163cd0 2:0xc000163ce0 3:0xc000163cf0 4:0xc000163d00 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] before accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [4 2]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 102}'s shards status are map[0:0xc000163cc0 1:0xc000163cd0 2:0xc000163ce0 3:0xc000163cf0 4:0xc000163d00 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] after accepting shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [4 2]} when currentConfig is {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} fetches latest configuration {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 4
+2025/01/04 13:02:36 {Node 1}{Group 100} will not try to fetch latest configuration because shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc0001f94e0 6:0xc0001f94d0 7:0xc000162630 8:0xc000162640 9:0xc000162650] when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} 12 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} updates currentConfig from {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} 12 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 102} updates currentConfig from {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} starts a PullTask to get shards [9 1 8 7 3] from group 100 when config is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} fetches latest configuration {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 4
+2025/01/04 13:02:36 {Node 1}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} 11 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 101} updates currentConfig from {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 101} Execute Command Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 2}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} 11 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 101} updates currentConfig from {Num:4,Shards:[102 100 102 100 102 102 102 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2] 102:[server-102-0 server-102-1 server-102-2]]} to {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} processes PullTaskRequest ShardOperationArgs{ConfigNum: 5, ShardIDs: [9 1 8 7 3]} with PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 5, Shards: map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 7:map[9:uLp-jSb34BeR5T1bZtEo] 8:map[0:ynDagi9hjDX-3dNFobHA] 9:map[1:CcUqGKpQDtN03020-efC]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}
+2025/01/04 13:02:36 {Node 2}{Group 102} gets a PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 5, Shards: map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 7:map[9:uLp-jSb34BeR5T1bZtEo] 8:map[0:ynDagi9hjDX-3dNFobHA] 9:map[1:CcUqGKpQDtN03020-efC]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} and tries to commit it when currentConfigNum is 5
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: InsertShards, Data: {OK 5 map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 7:map[9:uLp-jSb34BeR5T1bZtEo] 8:map[0:ynDagi9hjDX-3dNFobHA] 9:map[1:CcUqGKpQDtN03020-efC]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 13 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 5, Shards: map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 7:map[9:uLp-jSb34BeR5T1bZtEo] 8:map[0:ynDagi9hjDX-3dNFobHA] 9:map[1:CcUqGKpQDtN03020-efC]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: InsertShards, Data: {OK 5 map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 7:map[9:uLp-jSb34BeR5T1bZtEo] 8:map[0:ynDagi9hjDX-3dNFobHA] 9:map[1:CcUqGKpQDtN03020-efC]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} with CommandReply CommandReply{Err: , Value: }
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: InsertShards, Data: {OK 5 map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 7:map[9:uLp-jSb34BeR5T1bZtEo] 8:map[0:ynDagi9hjDX-3dNFobHA] 9:map[1:CcUqGKpQDtN03020-efC]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]}} 13 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 102} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 5, Shards: map[1:map[3:9YGBEYDYq7tfksnYfrYK] 3:map[5:Xq71rAhhsqtNrwEuPlHF] 7:map[9:uLp-jSb34BeR5T1bZtEo] 8:map[0:ynDagi9hjDX-3dNFobHA] 9:map[1:CcUqGKpQDtN03020-efC]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 9, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} will not try to fetch latest configuration because shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc0001f94e0 6:0xc0001f94d0 7:0xc000162630 8:0xc000162640 9:0xc000162650] when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} starts a GCTask to delete shards [1 8 9 3 7] from group 100 when config is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} will not try to fetch latest configuration because shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {5 [1 8 9 3 7]}} 32 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 100}'s shards status are map[0:0xc000266290 1:0xc000266270 2:0xc000266280 3:0xc0002662a0 4:0xc0002662b0 5:0xc0001f94e0 6:0xc0001f94d0 7:0xc000162630 8:0xc000162640 9:0xc000162650] before accepting shards deletion ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {5 [1 8 9 3 7]}} 32 2 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 100}'s shards status are map[0:0xc000266290 1:0xc000320070 2:0xc000266280 3:0xc0003200a0 4:0xc0002662b0 5:0xc0001f94e0 6:0xc0001f94d0 7:0xc0003200b0 8:0xc000320080 9:0xc000320090] after accepting shards deletion ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} Execute Command Command{commandType: DeleteShards, Data: {5 [1 8 9 3 7]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 2}{Group 100}'s shards status are map[0:0xc0004c4c90 1:0xc0004c4c70 2:0xc0004c4c80 3:0xc0004c4ca0 4:0xc0004c4cb0 5:0xc000387740 6:0xc000387730 7:0xc000162a20 8:0xc000162a30 9:0xc000162a40] before accepting shards deletion ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 100}'s shards status are map[0:0xc0004c4c90 1:0xc00002c0a0 2:0xc0004c4c80 3:0xc00002c2f0 4:0xc0004c4cb0 5:0xc000387740 6:0xc000387730 7:0xc00002c300 8:0xc00002c280 9:0xc00002c2d0] after accepting shards deletion ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 100} processes GCTaskRequest ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} with GCTaskReply ShardOperationReply{Err: OK, ConfigNum: 0, Shards: map[], LastOperations: map[]}
+2025/01/04 13:02:36 {Node 2}{Group 102} deletes shards [1 8 9 3 7] in remote group successfully when currentConfigNum is 5
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {5 [1 8 9 3 7]}} 14 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102}'s shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] before accepting shards deletion ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102}'s shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] after accepting shards deletion ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {0  Get 2739519657419126787 20}} 15 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {0  Get 2739519657419126787 20}} with CommandReply CommandReply{Err: OK, Value: ynDagi9hjDX-3dNFobHA}
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {5 [1 8 9 3 7]}} 14 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 1}{Group 102}'s shards status are map[0:0xc000163cc0 1:0xc000163cd0 2:0xc000163ce0 3:0xc000163cf0 4:0xc000163d00 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] before accepting shards deletion ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: DeleteShards, Data: {5 [1 8 9 3 7]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 102}'s shards status are map[0:0xc000163cc0 1:0xc000163cd0 2:0xc000163ce0 3:0xc000163cf0 4:0xc000163d00 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] after accepting shards deletion ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} when currentConfig is {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {0  Get 2739519657419126787 20}} 15 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {0 EizrnjuA_o4UMWie04RD Append 2739519657419126787 21}} 16 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {0 EizrnjuA_o4UMWie04RD Append 2739519657419126787 21}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {0 EizrnjuA_o4UMWie04RD Append 2739519657419126787 21}} 16 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {1  Get 2739519657419126787 22}} 17 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {1  Get 2739519657419126787 22}} with CommandReply CommandReply{Err: OK, Value: CcUqGKpQDtN03020-efC}
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {1  Get 2739519657419126787 22}} 17 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {1 eYPfNzNfqac26rYBD1Jd Append 2739519657419126787 23}} 18 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {1 eYPfNzNfqac26rYBD1Jd Append 2739519657419126787 23}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {1 eYPfNzNfqac26rYBD1Jd Append 2739519657419126787 23}} 18 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {2  Get 2739519657419126787 24}} 19 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {2  Get 2739519657419126787 24}} with CommandReply CommandReply{Err: OK, Value: MzrGptj6RVLloOJnALrL}
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {2  Get 2739519657419126787 24}} 19 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {2 CzF2Ii9fI-YBSNbHiW7O Append 2739519657419126787 25}} 20 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {2 CzF2Ii9fI-YBSNbHiW7O Append 2739519657419126787 25}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:36 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {2 CzF2Ii9fI-YBSNbHiW7O Append 2739519657419126787 25}} 20 3 false [] 0 0}
+2025/01/04 13:02:36 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {3  Get 2739519657419126787 26}} 21 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {3  Get 2739519657419126787 26}} with CommandReply CommandReply{Err: OK, Value: 9YGBEYDYq7tfksnYfrYK}
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {3  Get 2739519657419126787 26}} 21 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {3 r--YHb0IgAnHHBGfnUl1 Append 2739519657419126787 27}} 22 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {3 r--YHb0IgAnHHBGfnUl1 Append 2739519657419126787 27}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {3 r--YHb0IgAnHHBGfnUl1 Append 2739519657419126787 27}} 22 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {4  Get 2739519657419126787 28}} 23 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {4  Get 2739519657419126787 28}} with CommandReply CommandReply{Err: OK, Value: dqBWZKxt0lh6jbbyNoel}
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {4  Get 2739519657419126787 28}} 23 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {4 aq6TslKFxRXn-EV8suFM Append 2739519657419126787 29}} 24 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {4 aq6TslKFxRXn-EV8suFM Append 2739519657419126787 29}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {4 aq6TslKFxRXn-EV8suFM Append 2739519657419126787 29}} 24 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {5  Get 2739519657419126787 30}} 25 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {5  Get 2739519657419126787 30}} with CommandReply CommandReply{Err: OK, Value: Xq71rAhhsqtNrwEuPlHF}
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {5  Get 2739519657419126787 30}} 25 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {5 nqFJKgfU5Ry4VaptA_fj Append 2739519657419126787 31}} 26 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {5 nqFJKgfU5Ry4VaptA_fj Append 2739519657419126787 31}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {5 nqFJKgfU5Ry4VaptA_fj Append 2739519657419126787 31}} 26 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {6  Get 2739519657419126787 32}} 27 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {6  Get 2739519657419126787 32}} with CommandReply CommandReply{Err: OK, Value: zdQX7C9XpVGGTmPV5oJ6}
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {6  Get 2739519657419126787 32}} 27 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {6 l8KcL4vw_WegkMCnptqp Append 2739519657419126787 33}} 28 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {6 l8KcL4vw_WegkMCnptqp Append 2739519657419126787 33}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {6 l8KcL4vw_WegkMCnptqp Append 2739519657419126787 33}} 28 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {7  Get 2739519657419126787 34}} 29 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {7  Get 2739519657419126787 34}} with CommandReply CommandReply{Err: OK, Value: nYqI0dm8_9JMFmQcFmGx}
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {7  Get 2739519657419126787 34}} 29 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {7 8vQ7KGn1YRnH7ODc8DkN Append 2739519657419126787 35}} 30 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {7 8vQ7KGn1YRnH7ODc8DkN Append 2739519657419126787 35}} 30 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {7 8vQ7KGn1YRnH7ODc8DkN Append 2739519657419126787 35}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {8  Get 2739519657419126787 36}} 31 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {8  Get 2739519657419126787 36}} with CommandReply CommandReply{Err: OK, Value: ep7Ku_iFxmXuNkupnpCK}
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {8  Get 2739519657419126787 36}} 31 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {8 fby3-yxfzrrulW2LNlRD Append 2739519657419126787 37}} 32 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {8 fby3-yxfzrrulW2LNlRD Append 2739519657419126787 37}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {8 fby3-yxfzrrulW2LNlRD Append 2739519657419126787 37}} 32 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {9  Get 2739519657419126787 38}} 33 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {9  Get 2739519657419126787 38}} with CommandReply CommandReply{Err: OK, Value: uLp-jSb34BeR5T1bZtEo}
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {9  Get 2739519657419126787 38}} 33 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {9 FxGSVRUAPiGTuRUvqGtx Append 2739519657419126787 39}} 34 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {9 FxGSVRUAPiGTuRUvqGtx Append 2739519657419126787 39}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {9 FxGSVRUAPiGTuRUvqGtx Append 2739519657419126787 39}} 34 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 1}{Group 101} fetches latest configuration {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 5
+2025/01/04 13:02:37 {Node 1}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 12 2 false [] 0 0}
+2025/01/04 13:02:37 {Node 1}{Group 101} updates currentConfig from {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} to {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:37 {Node 1}{Group 101} Execute Command Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:37 {Node 2}{Group 101} tries to apply message {true Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 12 2 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 101} updates currentConfig from {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} to {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {0  Get 2739519657419126787 40}} 35 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {0  Get 2739519657419126787 40}} with CommandReply CommandReply{Err: OK, Value: ynDagi9hjDX-3dNFobHAEizrnjuA_o4UMWie04RD}
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {0  Get 2739519657419126787 40}} 35 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 1}{Group 101} starts a PullTask to get shards [0 3 4 1 2] from group 102 when config is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:37 {Node 2}{Group 102} fetches latest configuration {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 5
+2025/01/04 13:02:37 {Node 1}{Group 100} fetches latest configuration {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfigNum is 5
+2025/01/04 13:02:37 {Node 2}{Group 102} processes PullTaskRequest ShardOperationArgs{ConfigNum: 6, ShardIDs: [0 3 4 1 2]} with PullTaskReply ShardOperationReply{Err: ErrNotReady, ConfigNum: 0, Shards: map[], LastOperations: map[]}
+2025/01/04 13:02:37 {Node 2}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 36 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 2}{Group 102} updates currentConfig from {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} to {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:37 {Node 2}{Group 102} Execute Command Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:37 {Node 1}{Group 102} tries to apply message {true Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 36 3 false [] 0 0}
+2025/01/04 13:02:37 {Node 1}{Group 102} updates currentConfig from {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} to {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 33 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 100} updates currentConfig from {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} to {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 100} Execute Command Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:38 {Node 2}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 33 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 2}{Group 100} updates currentConfig from {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} to {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {0 fh7q-w7XfMqTYrGT1AEQ Append 2739519657419126787 41}} 37 3 false [] 0 0}
+2025/01/04 13:02:38 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {0 fh7q-w7XfMqTYrGT1AEQ Append 2739519657419126787 41}} 37 3 false [] 0 0}
+2025/01/04 13:02:38 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {0 fh7q-w7XfMqTYrGT1AEQ Append 2739519657419126787 41}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:38 {Node 1}{Group 101} starts a PullTask to get shards [0 3 4 1 2] from group 102 when config is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 101} will not try to fetch latest configuration because shards status are map[0:0xc000320590 1:0xc0001b2690 2:0xc0004c40c0 3:0xc0001b2680 4:0xc0004c40b0 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 2}{Group 102} processes PullTaskRequest ShardOperationArgs{ConfigNum: 6, ShardIDs: [0 3 4 1 2]} with PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 6, Shards: map[0:map[2:MzrGptj6RVLloOJnALrLCzF2Ii9fI-YBSNbHiW7O] 1:map[3:9YGBEYDYq7tfksnYfrYKr--YHb0IgAnHHBGfnUl1] 2:map[4:dqBWZKxt0lh6jbbyNoelaq6TslKFxRXn-EV8suFM] 3:map[5:Xq71rAhhsqtNrwEuPlHFnqFJKgfU5Ry4VaptA_fj] 4:map[6:zdQX7C9XpVGGTmPV5oJ6l8KcL4vw_WegkMCnptqp]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 41, LastReply: CommandReply{Err: OK, Value: }}]}
+2025/01/04 13:02:38 {Node 1}{Group 101} gets a PullTaskReply ShardOperationReply{Err: OK, ConfigNum: 6, Shards: map[0:map[2:MzrGptj6RVLloOJnALrLCzF2Ii9fI-YBSNbHiW7O] 1:map[3:9YGBEYDYq7tfksnYfrYKr--YHb0IgAnHHBGfnUl1] 2:map[4:dqBWZKxt0lh6jbbyNoelaq6TslKFxRXn-EV8suFM] 3:map[5:Xq71rAhhsqtNrwEuPlHFnqFJKgfU5Ry4VaptA_fj] 4:map[6:zdQX7C9XpVGGTmPV5oJ6l8KcL4vw_WegkMCnptqp]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 41, LastReply: CommandReply{Err: OK, Value: }}]} and tries to commit it when currentConfigNum is 6
+2025/01/04 13:02:38 {Node 2}{Group 102} will not try to fetch latest configuration because shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {1  Get 2739519657419126787 42}} 38 3 false [] 0 0}
+2025/01/04 13:02:38 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {1  Get 2739519657419126787 42}} with CommandReply CommandReply{Err: OK, Value: CcUqGKpQDtN03020-efCeYPfNzNfqac26rYBD1Jd}
+2025/01/04 13:02:38 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {1  Get 2739519657419126787 42}} 38 3 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: InsertShards, Data: {OK 6 map[0:map[2:MzrGptj6RVLloOJnALrLCzF2Ii9fI-YBSNbHiW7O] 1:map[3:9YGBEYDYq7tfksnYfrYKr--YHb0IgAnHHBGfnUl1] 2:map[4:dqBWZKxt0lh6jbbyNoelaq6TslKFxRXn-EV8suFM] 3:map[5:Xq71rAhhsqtNrwEuPlHFnqFJKgfU5Ry4VaptA_fj] 4:map[6:zdQX7C9XpVGGTmPV5oJ6l8KcL4vw_WegkMCnptqp]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 41, LastReply: CommandReply{Err: OK, Value: }}]}} 13 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 6, Shards: map[0:map[2:MzrGptj6RVLloOJnALrLCzF2Ii9fI-YBSNbHiW7O] 1:map[3:9YGBEYDYq7tfksnYfrYKr--YHb0IgAnHHBGfnUl1] 2:map[4:dqBWZKxt0lh6jbbyNoelaq6TslKFxRXn-EV8suFM] 3:map[5:Xq71rAhhsqtNrwEuPlHFnqFJKgfU5Ry4VaptA_fj] 4:map[6:zdQX7C9XpVGGTmPV5oJ6l8KcL4vw_WegkMCnptqp]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 41, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: InsertShards, Data: {OK 6 map[0:map[2:MzrGptj6RVLloOJnALrLCzF2Ii9fI-YBSNbHiW7O] 1:map[3:9YGBEYDYq7tfksnYfrYKr--YHb0IgAnHHBGfnUl1] 2:map[4:dqBWZKxt0lh6jbbyNoelaq6TslKFxRXn-EV8suFM] 3:map[5:Xq71rAhhsqtNrwEuPlHFnqFJKgfU5Ry4VaptA_fj] 4:map[6:zdQX7C9XpVGGTmPV5oJ6l8KcL4vw_WegkMCnptqp]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 41, LastReply: CommandReply{Err: OK, Value: }}]}} 13 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: InsertShards, Data: {OK 6 map[0:map[2:MzrGptj6RVLloOJnALrLCzF2Ii9fI-YBSNbHiW7O] 1:map[3:9YGBEYDYq7tfksnYfrYKr--YHb0IgAnHHBGfnUl1] 2:map[4:dqBWZKxt0lh6jbbyNoelaq6TslKFxRXn-EV8suFM] 3:map[5:Xq71rAhhsqtNrwEuPlHFnqFJKgfU5Ry4VaptA_fj] 4:map[6:zdQX7C9XpVGGTmPV5oJ6l8KcL4vw_WegkMCnptqp]] map[2739519657419126787:OperationContext{MaxAppliedCommandId: 41, LastReply: CommandReply{Err: OK, Value: }}]}} with CommandReply CommandReply{Err: , Value: }
+2025/01/04 13:02:38 {Node 2}{Group 101} accepts shards insertion ShardOperationReply{Err: OK, ConfigNum: 6, Shards: map[0:map[2:MzrGptj6RVLloOJnALrLCzF2Ii9fI-YBSNbHiW7O] 1:map[3:9YGBEYDYq7tfksnYfrYKr--YHb0IgAnHHBGfnUl1] 2:map[4:dqBWZKxt0lh6jbbyNoelaq6TslKFxRXn-EV8suFM] 3:map[5:Xq71rAhhsqtNrwEuPlHFnqFJKgfU5Ry4VaptA_fj] 4:map[6:zdQX7C9XpVGGTmPV5oJ6l8KcL4vw_WegkMCnptqp]], LastOperations: map[2739519657419126787:OperationContext{MaxAppliedCommandId: 41, LastReply: CommandReply{Err: OK, Value: }}]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 101} starts a GCTask to delete shards [3 4 0 2 1] from group 102 when config is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {1 NA2BEzbt6l85JWF1wdwL Append 2739519657419126787 43}} 39 3 false [] 0 0}
+2025/01/04 13:02:38 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {1 NA2BEzbt6l85JWF1wdwL Append 2739519657419126787 43}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:38 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {1 NA2BEzbt6l85JWF1wdwL Append 2739519657419126787 43}} 39 3 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} will not try to fetch latest configuration because shards status are map[0:0xc000320590 1:0xc0001b2690 2:0xc0004c40c0 3:0xc0001b2680 4:0xc0004c40b0 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 2}{Group 102} will not try to fetch latest configuration because shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 101} will not try to fetch latest configuration because shards status are map[0:0xc000320590 1:0xc0001b2690 2:0xc0004c40c0 3:0xc0001b2680 4:0xc0004c40b0 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 2}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {6 [3 4 0 2 1]}} 40 3 false [] 0 0}
+2025/01/04 13:02:38 {Node 2}{Group 102}'s shards status are map[0:0xc0001b2130 1:0xc0001b2140 2:0xc0001b2150 3:0xc0001b2160 4:0xc0001b2170 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] before accepting shards deletion ShardOperationArgs{ConfigNum: 6, ShardIDs: [3 4 0 2 1]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 2}{Group 102}'s shards status are map[0:0xc0001b3d40 1:0xc0001b3dc0 2:0xc0001b3d90 3:0xc0001b3d20 4:0xc0001b3d30 5:0xc0001b2180 6:0xc0001b2190 7:0xc0001b21a0 8:0xc0001b21b0 9:0xc0001b21c0] after accepting shards deletion ShardOperationArgs{ConfigNum: 6, ShardIDs: [3 4 0 2 1]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 2}{Group 102} Execute Command Command{commandType: DeleteShards, Data: {6 [3 4 0 2 1]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:38 {Node 2}{Group 102} processes GCTaskRequest ShardOperationArgs{ConfigNum: 6, ShardIDs: [3 4 0 2 1]} with GCTaskReply ShardOperationReply{Err: OK, ConfigNum: 0, Shards: map[], LastOperations: map[]}
+2025/01/04 13:02:38 {Node 1}{Group 101} deletes shards [3 4 0 2 1] in remote group successfully when currentConfigNum is 6
+2025/01/04 13:02:38 {Node 1}{Group 102} tries to apply message {true Command{commandType: DeleteShards, Data: {6 [3 4 0 2 1]}} 40 3 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 102}'s shards status are map[0:0xc000163cc0 1:0xc000163cd0 2:0xc000163ce0 3:0xc000163cf0 4:0xc000163d00 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] before accepting shards deletion ShardOperationArgs{ConfigNum: 6, ShardIDs: [3 4 0 2 1]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 102}'s shards status are map[0:0xc0002de1d0 1:0xc0002de1f0 2:0xc0002de1e0 3:0xc0002de1b0 4:0xc0002de1c0 5:0xc000163d10 6:0xc000163d20 7:0xc000163d30 8:0xc000163d40 9:0xc000163d50] after accepting shards deletion ShardOperationArgs{ConfigNum: 6, ShardIDs: [3 4 0 2 1]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {6 [3 4 0 2 1]}} 14 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101}'s shards status are map[0:0xc000320590 1:0xc0001b2690 2:0xc0004c40c0 3:0xc0001b2680 4:0xc0004c40b0 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] before accepting shards deletion ShardOperationArgs{ConfigNum: 6, ShardIDs: [3 4 0 2 1]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 101}'s shards status are map[0:0xc000320590 1:0xc0001b2690 2:0xc0004c40c0 3:0xc0001b2680 4:0xc0004c40b0 5:0xc0001631a0 6:0xc0001631b0 7:0xc0001631c0 8:0xc0001631d0 9:0xc0001631e0] after accepting shards deletion ShardOperationArgs{ConfigNum: 6, ShardIDs: [3 4 0 2 1]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: DeleteShards, Data: {6 [3 4 0 2 1]}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: DeleteShards, Data: {6 [3 4 0 2 1]}} 14 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 2}{Group 101}'s shards status are map[0:0xc0003209b0 1:0xc00039a350 2:0xc0001f8090 3:0xc00039a340 4:0xc0001f8080 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] before accepting shards deletion ShardOperationArgs{ConfigNum: 6, ShardIDs: [3 4 0 2 1]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 2}{Group 101}'s shards status are map[0:0xc0003209b0 1:0xc00039a350 2:0xc0001f8090 3:0xc00039a340 4:0xc0001f8080 5:0xc000163570 6:0xc000163580 7:0xc000163590 8:0xc0001635a0 9:0xc0001635b0] after accepting shards deletion ShardOperationArgs{ConfigNum: 6, ShardIDs: [3 4 0 2 1]} when currentConfig is {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {2  Get 2739519657419126787 44}} 15 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {2  Get 2739519657419126787 44}} with CommandReply CommandReply{Err: OK, Value: MzrGptj6RVLloOJnALrLCzF2Ii9fI-YBSNbHiW7O}
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {2  Get 2739519657419126787 44}} 15 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {2 -3Gbc2jNCkfhGOyi1ggW Append 2739519657419126787 45}} 16 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {2 -3Gbc2jNCkfhGOyi1ggW Append 2739519657419126787 45}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {2 -3Gbc2jNCkfhGOyi1ggW Append 2739519657419126787 45}} 16 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {3  Get 2739519657419126787 46}} 17 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {3  Get 2739519657419126787 46}} with CommandReply CommandReply{Err: OK, Value: 9YGBEYDYq7tfksnYfrYKr--YHb0IgAnHHBGfnUl1}
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {3  Get 2739519657419126787 46}} 17 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {3 sqOkrIfS_H8_EWCqpi5V Append 2739519657419126787 47}} 18 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {3 sqOkrIfS_H8_EWCqpi5V Append 2739519657419126787 47}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {3 sqOkrIfS_H8_EWCqpi5V Append 2739519657419126787 47}} 18 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {4  Get 2739519657419126787 48}} 19 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {4  Get 2739519657419126787 48}} with CommandReply CommandReply{Err: OK, Value: dqBWZKxt0lh6jbbyNoelaq6TslKFxRXn-EV8suFM}
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {4  Get 2739519657419126787 48}} 19 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {4 VTnX8bd8Jrx7lFnShq04 Append 2739519657419126787 49}} 20 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {4 VTnX8bd8Jrx7lFnShq04 Append 2739519657419126787 49}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {4 VTnX8bd8Jrx7lFnShq04 Append 2739519657419126787 49}} 20 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {5  Get 2739519657419126787 50}} 21 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {5  Get 2739519657419126787 50}} with CommandReply CommandReply{Err: OK, Value: Xq71rAhhsqtNrwEuPlHFnqFJKgfU5Ry4VaptA_fj}
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {5  Get 2739519657419126787 50}} 21 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {5 cXyY_fUPeN7GlOm7JTin Append 2739519657419126787 51}} 22 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {5 cXyY_fUPeN7GlOm7JTin Append 2739519657419126787 51}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {5 cXyY_fUPeN7GlOm7JTin Append 2739519657419126787 51}} 22 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {6  Get 2739519657419126787 52}} 23 2 false [] 0 0}
+2025/01/04 13:02:38 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {6  Get 2739519657419126787 52}} with CommandReply CommandReply{Err: OK, Value: zdQX7C9XpVGGTmPV5oJ6l8KcL4vw_WegkMCnptqp}
+2025/01/04 13:02:38 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {6  Get 2739519657419126787 52}} 23 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 1}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {6 83ZDoCZ5nWvmePVwvBQt Append 2739519657419126787 53}} 24 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 1}{Group 101} Execute Command Command{commandType: Operation, Data: {6 83ZDoCZ5nWvmePVwvBQt Append 2739519657419126787 53}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:39 {Node 2}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {6 83ZDoCZ5nWvmePVwvBQt Append 2739519657419126787 53}} 24 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {7  Get 2739519657419126787 54}} 41 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {7  Get 2739519657419126787 54}} 41 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {7  Get 2739519657419126787 54}} with CommandReply CommandReply{Err: OK, Value: nYqI0dm8_9JMFmQcFmGx8vQ7KGn1YRnH7ODc8DkN}
+2025/01/04 13:02:39 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {7 nMfkTcoXiGcnSDILKTi1 Append 2739519657419126787 55}} 42 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {7 nMfkTcoXiGcnSDILKTi1 Append 2739519657419126787 55}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:39 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {7 nMfkTcoXiGcnSDILKTi1 Append 2739519657419126787 55}} 42 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {8  Get 2739519657419126787 56}} 43 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {8  Get 2739519657419126787 56}} 43 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {8  Get 2739519657419126787 56}} with CommandReply CommandReply{Err: OK, Value: ep7Ku_iFxmXuNkupnpCKfby3-yxfzrrulW2LNlRD}
+2025/01/04 13:02:39 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {8 KmA6mX8qrHn6DqdENML3 Append 2739519657419126787 57}} 44 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {8 KmA6mX8qrHn6DqdENML3 Append 2739519657419126787 57}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:39 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {8 KmA6mX8qrHn6DqdENML3 Append 2739519657419126787 57}} 44 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {9  Get 2739519657419126787 58}} 45 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {9  Get 2739519657419126787 58}} 45 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {9  Get 2739519657419126787 58}} with CommandReply CommandReply{Err: OK, Value: uLp-jSb34BeR5T1bZtEoFxGSVRUAPiGTuRUvqGtx}
+2025/01/04 13:02:39 {Node 2}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {9 AzBUFKwh-yhfOYq-Ydyi Append 2739519657419126787 59}} 46 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 2}{Group 102} Execute Command Command{commandType: Operation, Data: {9 AzBUFKwh-yhfOYq-Ydyi Append 2739519657419126787 59}} with CommandReply CommandReply{Err: OK, Value: }
+2025/01/04 13:02:39 {Node 0}{Group 100} started
+2025/01/04 13:02:39 {Node 0}{Group 101} started
+2025/01/04 13:02:39 {Node 0}{Group 102} started
+2025/01/04 13:02:39 {Node 1}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {9 AzBUFKwh-yhfOYq-Ydyi Append 2739519657419126787 59}} 46 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 0}{Group 102} tries to apply message {false <nil> 0 0 true [52 255 137 3 1 1 6 67 111 110 102 105 103 1 255 138 0 1 3 1 3 78 117 109 1 4 0 1 6 83 104 97 114 100 115 1 255 140 0 1 6 71 114 111 117 112 115 1 255 132 0 0 0 23 255 139 1 1 1 7 91 49 48 93 105 110 116 1 255 140 0 1 4 1 20 0 0 33 255 131 4 1 1 16 109 97 112 91 105 110 116 93 91 93 115 116 114 105 110 103 1 255 132 0 1 4 1 255 130 0 0 12 255 129 2 1 2 255 130 0 1 12 0 0 71 255 138 1 10 1 10 255 204 255 204 255 204 255 204 255 204 255 204 255 204 255 204 255 204 255 204 1 1 255 204 3 12 115 101 114 118 101 114 45 49 48 50 45 48 12 115 101 114 118 101 114 45 49 48 50 45 49 12 115 101 114 118 101 114 45 49 48 50 45 50 0 113 255 138 1 12 1 10 255 202 255 202 255 202 255 202 255 202 255 204 255 204 255 204 255 204 255 204 1 2 255 204 3 12 115 101 114 118 101 114 45 49 48 50 45 48 12 115 101 114 118 101 114 45 49 48 50 45 49 12 115 101 114 118 101 114 45 49 48 50 45 50 255 202 3 12 115 101 114 118 101 114 45 49 48 49 45 48 12 115 101 114 118 101 114 45 49 48 49 45 49 12 115 101 114 118 101 114 45 49 48 49 45 50 0 15 255 165 4 1 2 255 166 0 1 4 1 255 162 0 0 31 255 161 3 1 2 255 162 0 1 2 1 2 75 86 1 255 164 0 1 6 83 116 97 116 117 115 1 6 0 0 0 33 255 163 4 1 1 17 109 97 112 91 115 116 114 105 110 103 93 115 116 114 105 110 103 1 255 164 0 1 12 1 12 0 0 254 1 83 255 166 0 10 2 1 0 0 4 1 0 0 12 1 1 1 56 60 101 112 55 75 117 95 105 70 120 109 88 117 78 107 117 112 110 112 67 75 102 98 121 51 45 121 120 102 122 114 114 117 108 87 50 76 78 108 82 68 75 109 65 54 109 88 56 113 114 72 110 54 68 113 100 69 78 77 76 51 0 16 1 1 1 48 60 121 110 68 97 103 105 57 104 106 68 88 45 51 100 78 70 111 98 72 65 69 105 122 114 110 106 117 65 95 111 52 85 77 87 105 101 48 52 82 68 102 104 55 113 45 119 55 88 102 77 113 84 89 114 71 84 49 65 69 81 0 18 1 1 1 49 60 67 99 85 113 71 75 112 81 68 116 78 48 51 48 50 48 45 101 102 67 101 89 80 102 78 122 78 102 113 97 99 50 54 114 89 66 68 49 74 100 78 65 50 66 69 122 98 116 54 108 56 53 74 87 70 49 119 100 119 76 0 0 1 0 0 6 1 0 0 8 1 0 0 10 1 1 1 55 60 110 89 113 73 48 100 109 56 95 57 74 77 70 109 81 99 70 109 71 120 56 118 81 55 75 71 110 49 89 82 110 72 55 79 68 99 56 68 107 78 110 77 102 107 84 99 111 88 105 71 99 110 83 68 73 76 75 84 105 49 0 14 1 1 1 57 40 117 76 112 45 106 83 98 51 52 66 101 82 53 84 49 98 90 116 69 111 70 120 71 83 86 82 85 65 80 105 71 84 117 82 85 118 113 71 116 120 0 15 255 169 4 1 2 255 170 0 1 4 1 255 168 0 0 51 255 167 3 1 2 255 168 0 1 2 1 19 77 97 120 65 112 112 108 105 101 100 67 111 109 109 97 110 100 73 100 1 4 0 1 9 76 97 115 116 82 101 112 108 121 1 255 160 0 0 0 44 255 159 3 1 1 12 67 111 109 109 97 110 100 82 101 112 108 121 1 255 160 0 1 2 1 3 69 114 114 1 12 0 1 5 86 97 108 117 101 1 12 0 0 0 22 255 170 0 1 248 76 9 117 58 71 85 112 6 1 114 1 1 2 79 75 0 0] 3 45}
+2025/01/04 13:02:39 {Node 0}{Group 102} tries to apply message {true Command{commandType: Operation, Data: {9 AzBUFKwh-yhfOYq-Ydyi Append 2739519657419126787 59}} 46 3 false [] 0 0}
+2025/01/04 13:02:39 {Node 0}{Group 101} tries to apply message {false <nil> 0 0 true [52 255 137 3 1 1 6 67 111 110 102 105 103 1 255 138 0 1 3 1 3 78 117 109 1 4 0 1 6 83 104 97 114 100 115 1 255 140 0 1 6 71 114 111 117 112 115 1 255 132 0 0 0 23 255 139 1 1 1 7 91 49 48 93 105 110 116 1 255 140 0 1 4 1 20 0 0 33 255 131 4 1 1 16 109 97 112 91 105 110 116 93 91 93 115 116 114 105 110 103 1 255 132 0 1 4 1 255 130 0 0 12 255 129 2 1 2 255 130 0 1 12 0 0 71 255 138 1 10 1 10 255 204 255 204 255 204 255 204 255 204 255 204 255 204 255 204 255 204 255 204 1 1 255 204 3 12 115 101 114 118 101 114 45 49 48 50 45 48 12 115 101 114 118 101 114 45 49 48 50 45 49 12 115 101 114 118 101 114 45 49 48 50 45 50 0 113 255 138 1 12 1 10 255 202 255 202 255 202 255 202 255 202 255 204 255 204 255 204 255 204 255 204 1 2 255 204 3 12 115 101 114 118 101 114 45 49 48 50 45 48 12 115 101 114 118 101 114 45 49 48 50 45 49 12 115 101 114 118 101 114 45 49 48 50 45 50 255 202 3 12 115 101 114 118 101 114 45 49 48 49 45 48 12 115 101 114 118 101 114 45 49 48 49 45 49 12 115 101 114 118 101 114 45 49 48 49 45 50 0 15 255 165 4 1 2 255 166 0 1 4 1 255 162 0 0 31 255 161 3 1 2 255 162 0 1 2 1 2 75 86 1 255 164 0 1 6 83 116 97 116 117 115 1 6 0 0 0 33 255 163 4 1 1 17 109 97 112 91 115 116 114 105 110 103 93 115 116 114 105 110 103 1 255 164 0 1 12 1 12 0 0 254 1 63 255 166 0 10 2 1 1 1 51 60 57 89 71 66 69 89 68 89 113 55 116 102 107 115 110 89 102 114 89 75 114 45 45 89 72 98 48 73 103 65 110 72 72 66 71 102 110 85 108 49 115 113 79 107 114 73 102 83 95 72 56 95 69 87 67 113 112 105 53 86 0 4 1 1 1 52 60 100 113 66 87 90 75 120 116 48 108 104 54 106 98 98 121 78 111 101 108 97 113 54 84 115 108 75 70 120 82 88 110 45 69 86 56 115 117 70 77 86 84 110 88 56 98 100 56 74 114 120 55 108 70 110 83 104 113 48 52 0 10 1 0 0 16 1 0 0 0 1 1 1 50 60 77 122 114 71 112 116 106 54 82 86 76 108 111 79 74 110 65 76 114 76 67 122 70 50 73 105 57 102 73 45 89 66 83 78 98 72 105 87 55 79 45 51 71 98 99 50 106 78 67 107 102 104 71 79 121 105 49 103 103 87 0 6 1 1 1 53 40 88 113 55 49 114 65 104 104 115 113 116 78 114 119 69 117 80 108 72 70 110 113 70 74 75 103 102 85 53 82 121 52 86 97 112 116 65 95 102 106 0 8 1 1 1 54 40 122 100 81 88 55 67 57 88 112 86 71 71 84 109 80 86 53 111 74 54 108 56 75 99 76 52 118 119 95 87 101 103 107 77 67 110 112 116 113 112 0 12 1 0 0 14 1 0 0 18 1 0 0 15 255 169 4 1 2 255 170 0 1 4 1 255 168 0 0 51 255 167 3 1 2 255 168 0 1 2 1 19 77 97 120 65 112 112 108 105 101 100 67 111 109 109 97 110 100 73 100 1 4 0 1 9 76 97 115 116 82 101 112 108 121 1 255 160 0 0 0 44 255 159 3 1 1 12 67 111 109 109 97 110 100 82 101 112 108 121 1 255 160 0 1 2 1 3 69 114 114 1 12 0 1 5 86 97 108 117 101 1 12 0 0 0 22 255 170 0 1 248 76 9 117 58 71 85 112 6 1 98 1 1 2 79 75 0 0] 2 21}
+2025/01/04 13:02:39 {Node 0}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {5 cXyY_fUPeN7GlOm7JTin Append 2739519657419126787 51}} 22 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 0}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {6  Get 2739519657419126787 52}} 23 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 0}{Group 101} tries to apply message {true Command{commandType: Operation, Data: {6 83ZDoCZ5nWvmePVwvBQt Append 2739519657419126787 53}} 24 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 0}{Group 100} tries to apply message {false <nil> 0 0 true [52 255 137 3 1 1 6 67 111 110 102 105 103 1 255 138 0 1 3 1 3 78 117 109 1 4 0 1 6 83 104 97 114 100 115 1 255 140 0 1 6 71 114 111 117 112 115 1 255 132 0 0 0 23 255 139 1 1 1 7 91 49 48 93 105 110 116 1 255 140 0 1 4 1 20 0 0 33 255 131 4 1 1 16 109 97 112 91 105 110 116 93 91 93 115 116 114 105 110 103 1 255 132 0 1 4 1 255 130 0 0 12 255 129 2 1 2 255 130 0 1 12 0 0 255 155 255 138 1 6 1 10 255 204 255 202 255 202 255 202 255 202 255 204 255 204 255 200 255 200 255 200 1 3 255 200 3 12 115 101 114 118 101 114 45 49 48 48 45 48 12 115 101 114 118 101 114 45 49 48 48 45 49 12 115 101 114 118 101 114 45 49 48 48 45 50 255 204 3 12 115 101 114 118 101 114 45 49 48 50 45 48 12 115 101 114 118 101 114 45 49 48 50 45 49 12 115 101 114 118 101 114 45 49 48 50 45 50 255 202 3 12 115 101 114 118 101 114 45 49 48 49 45 48 12 115 101 114 118 101 114 45 49 48 49 45 49 12 115 101 114 118 101 114 45 49 48 49 45 50 0 113 255 138 1 8 1 10 255 204 255 200 255 204 255 200 255 204 255 204 255 204 255 200 255 200 255 200 1 2 255 200 3 12 115 101 114 118 101 114 45 49 48 48 45 48 12 115 101 114 118 101 114 45 49 48 48 45 49 12 115 101 114 118 101 114 45 49 48 48 45 50 255 204 3 12 115 101 114 118 101 114 45 49 48 50 45 48 12 115 101 114 118 101 114 45 49 48 50 45 49 12 115 101 114 118 101 114 45 49 48 50 45 50 0 15 255 165 4 1 2 255 166 0 1 4 1 255 162 0 0 31 255 161 3 1 2 255 162 0 1 2 1 2 75 86 1 255 164 0 1 6 83 116 97 116 117 115 1 6 0 0 0 33 255 163 4 1 1 17 109 97 112 91 115 116 114 105 110 103 93 115 116 114 105 110 103 1 255 164 0 1 12 1 12 0 0 255 163 255 166 0 10 16 1 1 1 48 20 121 110 68 97 103 105 57 104 106 68 88 45 51 100 78 70 111 98 72 65 0 2 1 1 1 51 20 57 89 71 66 69 89 68 89 113 55 116 102 107 115 110 89 102 114 89 75 1 3 0 6 1 1 1 53 20 88 113 55 49 114 65 104 104 115 113 116 78 114 119 69 117 80 108 72 70 1 3 0 10 1 0 0 12 1 0 0 18 1 1 1 49 20 67 99 85 113 71 75 112 81 68 116 78 48 51 48 50 48 45 101 102 67 0 0 1 0 0 4 1 0 0 8 1 0 0 14 1 1 1 57 20 117 76 112 45 106 83 98 51 52 66 101 82 53 84 49 98 90 116 69 111 0 15 255 169 4 1 2 255 170 0 1 4 1 255 168 0 0 51 255 167 3 1 2 255 168 0 1 2 1 19 77 97 120 65 112 112 108 105 101 100 67 111 109 109 97 110 100 73 100 1 4 0 1 9 76 97 115 116 82 101 112 108 121 1 255 160 0 0 0 44 255 159 3 1 1 12 67 111 109 109 97 110 100 82 101 112 108 121 1 255 160 0 1 2 1 3 69 114 114 1 12 0 1 5 86 97 108 117 101 1 12 0 0 0 22 255 170 0 1 248 76 9 117 58 71 85 112 6 1 18 1 1 2 79 75 0 0] 2 29}
+2025/01/04 13:02:39 {Node 0}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {4 [3 1]}} 30 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 0}{Group 100} discards outdated shards deletion ShardOperationArgs{ConfigNum: 4, ShardIDs: [3 1]} when currentConfig is {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:39 {Node 0}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]}} 31 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 0}{Group 100} discards outdated configuration {Num:5,Shards:[102 102 102 102 102 102 102 102 102 102],Groups:map[102:[server-102-0 server-102-1 server-102-2]]} when currentConfig is {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:39 {Node 0}{Group 100} tries to apply message {true Command{commandType: DeleteShards, Data: {5 [1 8 9 3 7]}} 32 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 0}{Group 100} discards outdated shards deletion ShardOperationArgs{ConfigNum: 5, ShardIDs: [1 8 9 3 7]} when currentConfig is {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+2025/01/04 13:02:39 {Node 0}{Group 100} tries to apply message {true Command{commandType: Configuration, Data: {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]}} 33 2 false [] 0 0}
+2025/01/04 13:02:39 {Node 0}{Group 100} discards outdated configuration {Num:6,Shards:[101 101 101 101 101 102 102 102 102 102],Groups:map[101:[server-101-0 server-101-1 server-101-2] 102:[server-102-0 server-102-1 server-102-2]]} when currentConfig is {Num:1,Shards:[100 100 100 100 100 100 100 100 100 100],Groups:map[100:[server-100-0 server-100-1 server-100-2]]}
+panic: test timed out after 30s
+	running tests:
+		TestMissChange5B (30s)
+
+goroutine 18061 [running]:
+testing.(*M).startAlarm.func1()
+	/usr/local/go/src/testing/testing.go:2373 +0x385
+created by time.goFunc
+	/usr/local/go/src/time/sleep.go:215 +0x2d
+
+goroutine 1 [chan receive]:
+testing.(*T).Run(0xc00010eb60, {0x692c32?, 0x0?}, 0x6aa390)
+	/usr/local/go/src/testing/testing.go:1751 +0x3ab
+testing.runTests.func1(0xc00010eb60)
+	/usr/local/go/src/testing/testing.go:2168 +0x37
+testing.tRunner(0xc00010eb60, 0xc00012bc70)
+	/usr/local/go/src/testing/testing.go:1690 +0xf4
+testing.runTests(0xc000010408, {0x87a3c0, 0xe, 0xe}, {0x471ad0?, 0x47173a?, 0x87f260?})
+	/usr/local/go/src/testing/testing.go:2166 +0x43d
+testing.(*M).Run(0xc0001100a0)
+	/usr/local/go/src/testing/testing.go:2034 +0x64a
+main.main()
+	_testmain.go:71 +0x9b
+
+goroutine 6 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*Clerk).Command(0xc00016a510, 0xc0004fbf00)
+	/home/ubuntu/my_6.5840/src/shardkv/client.go:106 +0xff
+6.5840/shardkv.(*Clerk).Get(...)
+	/home/ubuntu/my_6.5840/src/shardkv/client.go:73
+6.5840/shardkv.check(0xc00010ed00, 0xc00016a510, {0x69a869, 0x1}, {0xc0002e9240, 0x3c})
+	/home/ubuntu/my_6.5840/src/shardkv/test_test.go:17 +0x95
+6.5840/shardkv.TestMissChange5B(0xc00010ed00)
+	/home/ubuntu/my_6.5840/src/shardkv/test_test.go:351 +0x7b5
+testing.tRunner(0xc00010ed00, 0x6aa390)
+	/usr/local/go/src/testing/testing.go:1690 +0xf4
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1743 +0x390
+
+goroutine 7 [select]:
+6.5840/labrpc.MakeNetwork.func1()
+	/home/ubuntu/my_6.5840/src/labrpc/labrpc.go:160 +0xea
+created by 6.5840/labrpc.MakeNetwork in goroutine 6
+	/home/ubuntu/my_6.5840/src/labrpc/labrpc.go:158 +0x196
+
+goroutine 8 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc000150120)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 9 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000015750, 0x1d6)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc0005a3e90?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000150120)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 10 [chan receive]:
+6.5840/shardctrler.(*ShardCtrler).applier(0xc00007e300)
+	/home/ubuntu/my_6.5840/src/shardctrler/server.go:70 +0x87
+created by 6.5840/shardctrler.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardctrler/server.go:62 +0x28a
+
+goroutine 11 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc000150240)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 12 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000015c10, 0x1d3)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc0001b80b0?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000150240)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 13 [chan receive]:
+6.5840/shardctrler.(*ShardCtrler).applier(0xc00007e780)
+	/home/ubuntu/my_6.5840/src/shardctrler/server.go:70 +0x87
+created by 6.5840/shardctrler.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardctrler/server.go:62 +0x28a
+
+goroutine 14 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc000150360)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 15 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000015dd0, 0x1dc)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc0005d0e90?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000150360)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 16 [chan receive]:
+6.5840/shardctrler.(*ShardCtrler).applier(0xc00007e9c0)
+	/home/ubuntu/my_6.5840/src/shardctrler/server.go:70 +0x87
+created by 6.5840/shardctrler.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardctrler/server.go:62 +0x28a
+
+goroutine 18 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000160150, 0x16)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc000057e90?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000150480)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 19 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc000166000)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 5577 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc000175080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 24 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc0001506c0)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 25 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000160310, 0x21)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc000173690?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc0001506c0)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 26 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc000166160)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 27 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166160, 0xc000162670, 0x5f5e100)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:199 +0x547
+
+goroutine 28 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166160, 0xc000162680, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:200 +0x5d1
+
+goroutine 29 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166160, 0xc000162690, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:201 +0x65b
+
+goroutine 30 [sleep]:
+time.Sleep(0xbebc200)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166160, 0xc0001626a0, 0xbebc200)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:202 +0x6e7
+
+goroutine 31 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc000150a20)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 32 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc0001604d0, 0x21)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc00016ee90?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000150a20)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 33 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc0001662c0)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 34 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001662c0, 0xc000162a60, 0x5f5e100)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:199 +0x547
+
+goroutine 35 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001662c0, 0xc000162a70, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:200 +0x5d1
+
+goroutine 36 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001662c0, 0xc000162a80, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:201 +0x65b
+
+goroutine 37 [sleep]:
+time.Sleep(0xbebc200)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001662c0, 0xc000162a90, 0xbebc200)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:202 +0x6e7
+
+goroutine 39 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000160690, 0x2)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc00018c690?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000150c60)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 40 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc000166420)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 45 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc000150ea0)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 46 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000160850, 0x18)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc000187e90?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000150ea0)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 47 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc000166580)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 48 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166580, 0xc000163200, 0x5f5e100)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:199 +0x547
+
+goroutine 49 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166580, 0xc000163210, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:200 +0x5d1
+
+goroutine 50 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166580, 0xc000163220, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:201 +0x65b
+
+goroutine 51 [sleep]:
+time.Sleep(0xbebc200)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166580, 0xc000163230, 0xbebc200)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:202 +0x6e7
+
+goroutine 52 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc000151200)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 53 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000160a10, 0x18)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc000195690?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000151200)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 54 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc0001666e0)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 55 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001666e0, 0xc0001635d0, 0x5f5e100)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:199 +0x547
+
+goroutine 56 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001666e0, 0xc0001635e0, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:200 +0x5d1
+
+goroutine 57 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001666e0, 0xc0001635f0, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:201 +0x65b
+
+goroutine 58 [sleep]:
+time.Sleep(0xbebc200)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001666e0, 0xc000163600, 0xbebc200)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:202 +0x6e7
+
+goroutine 60 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000160bd0, 0x2)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc000190e90?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000151440)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 61 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc000166840)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 66 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc000151680)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 67 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000160d90, 0x2d)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc0001ae690?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc000151680)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 68 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc0001669a0)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 69 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001669a0, 0xc000163d70, 0x5f5e100)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:199 +0x547
+
+goroutine 70 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001669a0, 0xc000163d80, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:200 +0x5d1
+
+goroutine 71 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001669a0, 0xc000163d90, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:201 +0x65b
+
+goroutine 72 [sleep]:
+time.Sleep(0xbebc200)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001669a0, 0xc000163da0, 0xbebc200)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:202 +0x6e7
+
+goroutine 73 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc0001518c0)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 74 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000160f50, 0x2d)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc0001b1e90?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc0001518c0)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 75 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc000166b00)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 76 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166b00, 0xc0001b21e0, 0x5f5e100)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:199 +0x547
+
+goroutine 77 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166b00, 0xc0001b21f0, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:200 +0x5d1
+
+goroutine 78 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166b00, 0xc0001b2200, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:201 +0x65b
+
+goroutine 79 [sleep]:
+time.Sleep(0xbebc200)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000166b00, 0xc0001b2210, 0xbebc200)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:202 +0x6e7
+
+goroutine 5581 [sleep]:
+time.Sleep(0xbebc200)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000175080, 0xc000266490, 0xbebc200)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:202 +0x6e7
+
+goroutine 5575 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc0002c9680)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 5576 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc000405c90, 0x2)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc0004c6580?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc0002c9680)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 5579 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000175080, 0xc000266470, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:200 +0x5d1
+
+goroutine 5578 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000175080, 0xc000266460, 0x5f5e100)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:199 +0x547
+
+goroutine 5580 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000175080, 0xc000266480, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:201 +0x65b
+
+goroutine 5582 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc0000b6d80)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 5583 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc0004fb2d0, 0x2)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc0002e1080?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc0000b6d80)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 5584 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc0001751e0)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 5585 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001751e0, 0xc000266b00, 0x5f5e100)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:199 +0x547
+
+goroutine 5586 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001751e0, 0xc000266b10, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:200 +0x5d1
+
+goroutine 5587 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001751e0, 0xc000266b20, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:201 +0x65b
+
+goroutine 5588 [sleep]:
+time.Sleep(0xbebc200)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc0001751e0, 0xc000266b30, 0xbebc200)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:202 +0x6e7
+
+goroutine 5589 [sleep]:
+time.Sleep(0x1c9c380)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/raft.(*Raft).ticker(0xc0000b70e0)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:498 +0x26
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:556 +0x3c9
+
+goroutine 5590 [sync.Cond.Wait]:
+sync.runtime_notifyListWait(0xc0004fb910, 0x1)
+	/usr/local/go/src/runtime/sema.go:587 +0x159
+sync.(*Cond).Wait(0xc0004ede90?)
+	/usr/local/go/src/sync/cond.go:71 +0x85
+6.5840/raft.(*Raft).applyLog(0xc0000b70e0)
+	/home/ubuntu/my_6.5840/src/raft/raft.go:1149 +0x1ad
+created by 6.5840/raft.Make in goroutine 6
+	/home/ubuntu/my_6.5840/src/raft/raft.go:558 +0x405
+
+goroutine 5591 [chan receive]:
+6.5840/shardkv.(*ShardKV).applier(0xc000175340)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:393 +0x87
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:196 +0x4b8
+
+goroutine 5592 [sleep]:
+time.Sleep(0x5f5e100)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000175340, 0xc0002671b0, 0x5f5e100)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:199 +0x547
+
+goroutine 5593 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000175340, 0xc0002671c0, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:200 +0x5d1
+
+goroutine 5594 [sleep]:
+time.Sleep(0x2faf080)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000175340, 0xc0002671d0, 0x2faf080)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:201 +0x65b
+
+goroutine 5595 [sleep]:
+time.Sleep(0xbebc200)
+	/usr/local/go/src/runtime/time.go:300 +0xf2
+6.5840/shardkv.(*ShardKV).Monitor(0xc000175340, 0xc0002671e0, 0xbebc200)
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:385 +0x29
+created by 6.5840/shardkv.StartServer in goroutine 6
+	/home/ubuntu/my_6.5840/src/shardkv/server.go:202 +0x6e7
+exit status 2
+FAIL	6.5840/shardkv	30.067s

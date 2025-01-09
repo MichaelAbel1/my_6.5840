@@ -11,9 +11,9 @@ import (
 type Clerk struct {
 	servers []*labrpc.ClientEnd
 	// You will have to modify this struct.
-	clerkId  int64 // the unique id of this clerk.
-	nextOpId int   // the next op id to allocate for an op.
-	leaderId int   // known leader, defaults to the servers[0].
+	clerkId   int64 // the unique id of this clerk.
+	commandId int64 // the command id to allocate for an op.
+	leaderId  int64 // known leader, defaults to the servers[0].
 }
 
 func nrand() int64 {
@@ -29,7 +29,7 @@ func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
 	// You'll have to add code here.
 	ck.clerkId = nrand()
 	ck.leaderId = 0
-	ck.nextOpId = 0
+	ck.commandId = 0
 
 	return ck
 }
@@ -49,7 +49,7 @@ func (ck *Clerk) GetState() int {
 			return int(ck.leaderId)
 		} else {
 			time.Sleep(100 * time.Millisecond)
-			ck.leaderId = (ck.leaderId + 1) % len(ck.servers)
+			ck.leaderId = (ck.leaderId + 1) % int64(len(ck.servers))
 		}
 	}
 
@@ -70,7 +70,7 @@ func (ck *Clerk) Get(key string) string {
 	args := GetArgs{
 		Key:     key,
 		ClerkId: ck.clerkId,
-		OpId:    ck.nextOpId,
+		OpId:    ck.commandId,
 	}
 	reply := GetReply{}
 	ok := false
@@ -80,7 +80,7 @@ func (ck *Clerk) Get(key string) string {
 		ok = ck.servers[ck.leaderId].Call("KVServer.Get", &args, &reply)
 	}
 	if ok {
-		ck.nextOpId++
+		ck.commandId++
 	}
 	DPrintf("Client %d Return Get %s from %d", ck.clerkId, key, ck.leaderId)
 	return reply.Value
@@ -101,7 +101,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 		Value:   value,
 		OpType:  op,
 		ClerkId: ck.clerkId,
-		OpId:    ck.nextOpId,
+		OpId:    ck.commandId,
 	}
 
 	reply := PutAppendReply{}
@@ -112,7 +112,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 		ok = ck.servers[ck.leaderId].Call("KVServer.PutAppend", &args, &reply)
 	}
 	if ok {
-		ck.nextOpId++
+		ck.commandId++
 	}
 }
 

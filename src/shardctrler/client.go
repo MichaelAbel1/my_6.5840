@@ -4,14 +4,19 @@ package shardctrler
 // Shardctrler clerk.
 //
 
-import "6.5840/labrpc"
-import "time"
-import "crypto/rand"
-import "math/big"
+import (
+	"crypto/rand"
+	"math/big"
+
+	"6.5840/labrpc"
+)
 
 type Clerk struct {
 	servers []*labrpc.ClientEnd
 	// Your data here.
+	clerkId   int64 // the unique id of this clerk.
+	commandId int64 // the command id to allocate for an op.
+	leaderId  int64 // known leader, defaults to the servers[0].
 }
 
 func nrand() int64 {
@@ -25,77 +30,51 @@ func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
 	ck := new(Clerk)
 	ck.servers = servers
 	// Your code here.
+	ck.clerkId = nrand()
+	ck.leaderId = 0
+	ck.commandId = 0
 	return ck
 }
 
-func (ck *Clerk) Query(num int) Config {
-	args := &QueryArgs{}
-	// Your code here.
-	args.Num = num
-	for {
-		// try each known server.
-		for _, srv := range ck.servers {
-			var reply QueryReply
-			ok := srv.Call("ShardCtrler.Query", args, &reply)
-			if ok && reply.WrongLeader == false {
-				return reply.Config
-			}
-		}
-		time.Sleep(100 * time.Millisecond)
-	}
-}
-
+// Join sends a Join command to the shard controller.
 func (ck *Clerk) Join(servers map[int][]string) {
-	args := &JoinArgs{}
-	// Your code here.
-	args.Servers = servers
-
-	for {
-		// try each known server.
-		for _, srv := range ck.servers {
-			var reply JoinReply
-			ok := srv.Call("ShardCtrler.Join", args, &reply)
-			if ok && reply.WrongLeader == false {
-				return
-			}
-		}
-		time.Sleep(100 * time.Millisecond)
-	}
+	args := &CommandArgs{Op: Join, Servers: servers}
+	ck.Command(args)
 }
 
+// Leave sends a Leave command to the shard controller.
 func (ck *Clerk) Leave(gids []int) {
-	args := &LeaveArgs{}
-	// Your code here.
-	args.GIDs = gids
-
-	for {
-		// try each known server.
-		for _, srv := range ck.servers {
-			var reply LeaveReply
-			ok := srv.Call("ShardCtrler.Leave", args, &reply)
-			if ok && reply.WrongLeader == false {
-				return
-			}
-		}
-		time.Sleep(100 * time.Millisecond)
-	}
+	args := &CommandArgs{Op: Leave, GIDs: gids}
+	ck.Command(args)
 }
 
+// Move sends a Move command to the shard controller.
 func (ck *Clerk) Move(shard int, gid int) {
-	args := &MoveArgs{}
-	// Your code here.
-	args.Shard = shard
-	args.GID = gid
+	args := &CommandArgs{Op: Move, Shard: shard, GID: gid}
+	ck.Command(args)
+}
 
+// Query sends a Query command to the shard controller and returns the configuration.
+func (ck *Clerk) Query(num int) Config {
+	args := &CommandArgs{Op: Query, Num: num}
+	return ck.Command(args)
+}
+
+// Command sends a command to the shard controller.
+// It tries to send the command to the current leader.
+// If the leader is wrong or the call times out,
+// it tries the next server in the list as the leader.
+// If the command is successfully sent, it increments the command ID and returns the configuration in the reply.
+func (ck *Clerk) Command(args *CommandArgs) Config {
+	args.ClientId, args.CommandId = ck.clerkId, ck.commandId
 	for {
-		// try each known server.
-		for _, srv := range ck.servers {
-			var reply MoveReply
-			ok := srv.Call("ShardCtrler.Move", args, &reply)
-			if ok && reply.WrongLeader == false {
-				return
-			}
+		var reply CommandReply
+		// If the call fails due to wrong leader or timeout, try the next server as leader.
+		if !ck.servers[ck.leaderId].Call("ShardCtrler.Command", args, &reply) || reply.Err == ErrWrongLeader || reply.Err == ErrTimeout {
+			ck.leaderId = (ck.leaderId + 1) % int64(len(ck.servers))
+		} else {
+			ck.commandId++
+			return reply.Config
 		}
-		time.Sleep(100 * time.Millisecond)
 	}
 }

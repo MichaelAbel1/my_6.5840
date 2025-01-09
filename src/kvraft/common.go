@@ -15,7 +15,7 @@ const (
 
 type PutAppendArgs struct {
 	ClerkId int64
-	OpId    int
+	OpId    int64
 	OpType  string // "Put" or "Append"
 	Key     string
 	Value   string
@@ -29,7 +29,7 @@ type GetArgs struct {
 	Key string
 	// You'll have to add definitions here.
 	ClerkId int64
-	OpId    int
+	OpId    int64
 }
 
 type GetReply struct {
@@ -51,7 +51,7 @@ type Op struct {
 	// otherwise RPC will break.
 	OpType  string // "Get", "Put", "Append", "NoOp".
 	ClerkId int64
-	OpId    int
+	OpId    int64
 	Key     string
 	Value   string
 }
@@ -66,7 +66,7 @@ type OpReply struct {
 
 type Notifier struct {
 	done              sync.Cond
-	maxRegisteredOpId int
+	maxRegisteredOpId int64
 }
 
 const maxWaitTime = 500 * time.Millisecond

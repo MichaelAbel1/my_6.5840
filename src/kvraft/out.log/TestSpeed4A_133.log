@@ -1,0 +1,6 @@
+Test: ops complete fast enough (4A) ...
+--- FAIL: TestSpeed4A (38.69s)
+    test_test.go:419: Operations completed too slowly 38.126043ms/op > 33.333333ms/op
+FAIL
+exit status 1
+FAIL	6.5840/kvraft	38.712s

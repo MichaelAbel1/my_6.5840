@@ -23,7 +23,7 @@ type KVServer struct {
 	// Your definitions here.
 	hightWaterEnabled     bool
 	db                    map[string]string
-	maxAppliedOpIdOfClerk map[int64]int       // the maximum op id among all applied ops of each clerk.
+	maxAppliedOpIdOfClerk map[int64]int64     // the maximum op id among all applied ops of each clerk.
 	notifierOfClerk       map[int64]*Notifier // notifier for each clerk.
 
 	persister *raft.Persister // 用于持久化数据
@@ -209,7 +209,7 @@ func (kv *KVServer) engineStart() {
 		msg := <-kv.applyCh // 命令已经在raft中应用（绝大多数都已经同步日志，达成一致）
 		kv.mu.Lock()
 		if msg.CommandValid {
-			op := msg.Command.(*Op)
+			op := msg.Command.(*Op) // 类型断言（type assertion） 表达式，用于从接口类型断言出它的具体类型
 			if op.OpType == "NoOp" {
 				// skip no-ops.
 
@@ -257,7 +257,7 @@ func StartKVServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persiste
 		kv.ingestSnapshot(kv.persister.ReadSnapshot())
 	} else {
 		kv.db = make(map[string]string)
-		kv.maxAppliedOpIdOfClerk = make(map[int64]int)
+		kv.maxAppliedOpIdOfClerk = make(map[int64]int64)
 	}
 
 	kv.notifierOfClerk = map[int64]*Notifier{}

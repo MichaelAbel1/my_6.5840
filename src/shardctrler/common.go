@@ -1,5 +1,10 @@
 package shardctrler
 
+import (
+	"fmt"
+	"time"
+)
+
 //
 // Shard controller: assigns shards to replication groups.
 //
@@ -20,6 +25,8 @@ package shardctrler
 // The number of shards.
 const NShards = 10
 
+const ExecuteTimeout = 500 * time.Millisecond
+
 // A configuration -- an assignment of shards to groups.
 // Please don't change this.
 type Config struct {
@@ -28,46 +35,87 @@ type Config struct {
 	Groups map[int][]string // gid -> servers[]
 }
 
+type OpType uint8
+
 const (
-	OK = "OK"
+	Join OpType = iota
+	Leave
+	Move
+	Query
 )
 
-type Err string
-
-type JoinArgs struct {
-	Servers map[int][]string // new GID -> servers mappings
+func (op OpType) String() string {
+	switch op {
+	case Join:
+		return "Join"
+	case Leave:
+		return "Leave"
+	case Move:
+		return "Move"
+	case Query:
+		return "Query"
+	default:
+		panic(fmt.Sprintf("unknown operation type %d", op))
+	}
 }
 
-type JoinReply struct {
-	WrongLeader bool
-	Err         Err
+type Err uint8
+
+const (
+	OK Err = iota
+	ErrWrongLeader
+	ErrTimeout
+)
+
+func (e Err) String() string {
+	switch e {
+	case OK:
+		return "OK"
+	case ErrWrongLeader:
+		return "ErrWrongLeader"
+	case ErrTimeout:
+		return "ErrTimeout"
+	default:
+		panic(fmt.Sprintf("unknown error type %d", e))
+	}
 }
 
-type LeaveArgs struct {
-	GIDs []int
+type CommandArgs struct {
+	Servers   map[int][]string // for Join
+	GIDs      []int            // for Leave
+	Shard     int              // for Move
+	GID       int              // for Move
+	Num       int              // for Query
+	Op        OpType
+	ClientId  int64
+	CommandId int64
 }
 
-type LeaveReply struct {
-	WrongLeader bool
-	Err         Err
+type CommandReply struct {
+	Err    Err
+	Config Config
 }
 
-type MoveArgs struct {
-	Shard int
-	GID   int
+func (reply CommandReply) String() string {
+	return fmt.Sprintf("{Err:%v,Config:%v}", reply.Err, reply.Config)
 }
 
-type MoveReply struct {
-	WrongLeader bool
-	Err         Err
+type Command struct {
+	*CommandArgs
 }
 
-type QueryArgs struct {
-	Num int // desired config number
+func DefaultConfig() Config {
+	return Config{
+		Groups: make(map[int][]string),
+		Num:    0,
+	}
 }
 
-type QueryReply struct {
-	WrongLeader bool
-	Err         Err
-	Config      Config
+func (cf Config) String() string {
+	return fmt.Sprintf("{Num:%v,Shards:%v,Groups:%v}", cf.Num, cf.Shards, cf.Groups)
+}
+
+type OperationContext struct {
+	MaxAppliedCommandId int64
+	LastReply           *CommandReply
 }

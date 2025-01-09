@@ -43,6 +43,7 @@ type ApplyMsg struct {
 	CommandValid bool
 	Command      interface{}
 	CommandIndex int
+	CommandTerm  int
 
 	// For 3D:
 	SnapshotValid bool
@@ -135,6 +136,13 @@ func (rf *Raft) IsLeader() bool {
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 	return rf.state == Leader
+}
+
+// used by upper layer to detect whether there are any logs in current term
+func (rf *Raft) HasLogInCurrentTerm() bool {
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+	return rf.getLastLogTerm() == rf.currentTerm
 }
 
 // save Raft's persistent state to stable storage,
@@ -238,7 +246,26 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	// rf.log = rf.log[logIndex:]
 	rf.snapshot = snapshot
 	rf.persist()
+}
 
+func (rf *Raft) CondInstallSnapshot(lastIncludedTerm int, lastIncludedIndex int, snapshot []byte) bool {
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+	DPrintf("Server %v %p (Term: %v, State: %v) Snapshot: %v", rf.me, rf, rf.currentTerm, rf.state, lastIncludedIndex)
+	// outdated snapshot
+	if lastIncludedIndex <= rf.commitIndex {
+		DPrintf("{Node %v} rejects outdated snapshot with lastIncludeIndex %v as current commitIndex %v is larger in term %v", rf.me, lastIncludedIndex, rf.commitIndex, rf.currentTerm)
+		return false
+	}
+	term := rf.log[lastIncludedIndex-rf.getFirstLogIndex()].Term
+	rf.trimLog(lastIncludedIndex, term)
+	// logIndex := index - rf.getFirstLogIndex()
+	// rf.lastIncludedIndex = rf.log[logIndex].Index // 就是index
+	// rf.lastIncludedTerm = rf.log[logIndex].Term
+	// rf.log = rf.log[logIndex:]
+	rf.snapshot = snapshot
+	rf.persist()
+	return true
 }
 
 // example RequestVote RPC arguments structure.
@@ -630,12 +657,13 @@ func (rf *Raft) broadcastRequestVote() {
 		DPrintf("Invalid state for broadcastRequestVote: %v", rf.state)
 		return
 	}
-
+	lastLogIndex := rf.getLastLogIndex()
+	lastLogTerm, _ := rf.GetTerm(lastLogIndex)
 	args := &RequestVoteArgs{
 		Term:         rf.currentTerm,
 		CandidateId:  rf.me,
-		LastLogIndex: rf.getLastLogIndex(),
-		LastLogTerm:  rf.getLastLogTerm(),
+		LastLogIndex: lastLogIndex,
+		LastLogTerm:  lastLogTerm,
 	}
 
 	// votes counter, including itself
@@ -688,36 +716,8 @@ func (rf *Raft) hasNewEntries(to int) bool {
 	return rf.getLastLogIndex() >= rf.nextIndex[to]
 }
 
-func (rf *Raft) sendEntries(peer int) {
-	rf.mu.Lock()
-	if rf.state != Leader {
-		DPrintf("Server %v %p (Term: %v, State: %v) Invalid state for sendEntries: %v", rf.me, rf, rf.currentTerm, rf.state, rf.state)
-		rf.mu.Unlock()
-		return
-	}
-	// DPrintf("Raft.sendEntries : Server %v %p (Term: %v, State: %v) sendEntries to Server %v getFirstLogIndex: %v nextIndex: %v rf.log: %v", rf.me, rf, rf.currentTerm, rf.state, peer, rf.getFirstLogIndex(), rf.nextIndex[peer], rf.log)
+func (rf *Raft) sendEntries(peer int, args *AppendEntriesArgs) {
 	reply := &AppendEntriesReply{}
-	prevLogIndex := rf.nextIndex[peer] - 1
-	prevLogTerm, err := rf.getterm(prevLogIndex)
-	if err != nil {
-		DPrintf("Raft.sendEntries : Server %v %p (Term: %v, State: %v) , getterm error: %v", rf.me, rf, rf.currentTerm, rf.state, err)
-		return
-	}
-	entriesCopy := make([]LogEntry, len(rf.log[(rf.nextIndex[peer]-rf.getFirstLogIndex()):]))
-	copy(entriesCopy, rf.log[(rf.nextIndex[peer]-rf.getFirstLogIndex()):]) // 拷贝需要发送的日志条目
-	args := &AppendEntriesArgs{
-		Term:         rf.currentTerm,
-		LeaderId:     rf.me,
-		PrevLogIndex: prevLogIndex,
-		// Raft 中每个节点的日志条目是按顺序追加的，但随着日志的增长，Raft 节点
-		// 可能会进行日志截断（例如通过快照机制，来节省存储空间），这时日志的起始索引
-		//（getFirstLogIndex()）可能不是 0，而是一个更大的数。
-		PrevLogTerm:  prevLogTerm,
-		Entries:      entriesCopy, // !!! 不能直接使用rf.log[(rf.nextIndex[peer]-rf.getFirstLogIndex()):]
-		LeaderCommit: rf.commitIndex,
-	}
-	// DPrintf("Server %v %p (Term: %v, State: %v) send AppendEntries to %v, args: %v", rf.me, rf, rf.currentTerm, rf.state, peer, args)
-	rf.mu.Unlock()
 	ok := rf.sendAppendEntries(peer, args, reply)
 	if ok {
 		rf.mu.Lock()
@@ -773,7 +773,7 @@ func (rf *Raft) sendEntries(peer int) {
 			newNextIndex := reply.FirstConflictIndex
 			// warning: skip the snapshot index since it cannot conflict if all goes well.
 			for i := rf.getLastLogIndex(); i > rf.getFirstLogIndex(); i-- {
-				if term, _ := rf.getterm(i); term == reply.ConflictTerm {
+				if term, _ := rf.GetTerm(i); term == reply.ConflictTerm {
 					newNextIndex = i
 					break
 				}
@@ -793,6 +793,41 @@ func (rf *Raft) needSendSnapshot(to int) bool {
 	return rf.nextIndex[to] <= rf.getFirstLogIndex()
 }
 
+func (rf *Raft) makeInstallSnapshotArgs() *InstallSnapshotArgs {
+
+	args := &InstallSnapshotArgs{ // !!! 读取不加锁 是因为读到旧数据也不影响结果，如果很旧，其他会拒绝，重新发就行了
+		Term:              rf.currentTerm,
+		LeaderId:          rf.me,
+		LastIncludedIndex: rf.lastIncludedIndex,
+		LastIncludedTerm:  rf.lastIncludedTerm,
+		Snapshot:          rf.snapshot,
+		Done:              true,
+	}
+	return args
+}
+func (rf *Raft) makeAppendEntriesArgs(peer int) *AppendEntriesArgs {
+	// DPrintf("Raft.sendEntries : Server %v %p (Term: %v, State: %v) sendEntries to Server %v getFirstLogIndex: %v nextIndex: %v rf.log: %v", rf.me, rf, rf.currentTerm, rf.state, peer, rf.getFirstLogIndex(), rf.nextIndex[peer], rf.log)
+
+	prevLogIndex := rf.nextIndex[peer] - 1
+	prevLogTerm, _ := rf.GetTerm(prevLogIndex)
+
+	entriesCopy := make([]LogEntry, len(rf.log[(rf.nextIndex[peer]-rf.getFirstLogIndex()):]))
+	copy(entriesCopy, rf.log[(rf.nextIndex[peer]-rf.getFirstLogIndex()):]) // 拷贝需要发送的日志条目
+	args := &AppendEntriesArgs{
+		Term:         rf.currentTerm,
+		LeaderId:     rf.me,
+		PrevLogIndex: prevLogIndex,
+		// Raft 中每个节点的日志条目是按顺序追加的，但随着日志的增长，Raft 节点
+		// 可能会进行日志截断（例如通过快照机制，来节省存储空间），这时日志的起始索引
+		//（getFirstLogIndex()）可能不是 0，而是一个更大的数。
+		PrevLogTerm:  prevLogTerm,
+		Entries:      entriesCopy, // !!! 不能直接使用rf.log[(rf.nextIndex[peer]-rf.getFirstLogIndex()):]
+		LeaderCommit: rf.commitIndex,
+	}
+	// DPrintf("Server %v %p (Term: %v, State: %v) send AppendEntries to %v, args: %v", rf.me, rf, rf.currentTerm, rf.state, peer, args)
+	return args
+}
+
 func (rf *Raft) broadcastHeartBeat(forced bool) {
 	DPrintf("Server %v %p (Term: %v, State: %v) broadcast HeartBeat", rf.me, rf, rf.currentTerm, rf.state)
 	for peer := range rf.peers {
@@ -809,11 +844,14 @@ func (rf *Raft) broadcastHeartBeat(forced bool) {
 
 		if rf.needSendSnapshot(peer) {
 			// DPrintf("rf.broadcastHeartBeat: Server peer: %v needSendSnapshot from Server %v %p (Term: %v, State: %v) send Snapshot to %v", peer, rf.me, rf, rf.currentTerm, rf.state, peer)
-			go rf.sendSnapshot(peer) // !!!
+			args := rf.makeInstallSnapshotArgs()
+			DPrintf("rf.sendSnapshot: Server %v %p (Term: %v, State: %v) send snapshot to %v, args.Snapshot: %v", args.LeaderId, rf, args.Term, rf.state, peer, args.Snapshot)
+			go rf.sendSnapshot(peer, args) // !!!
 		} else if forced || rf.hasNewEntries(peer) {
 			// 由于没有新日志或者不强制时，不会发送日志更新follower的lastheartbeat 会出现 warning: term changed even though there were no failures
 			// 所以需要定时强制更新一次
-			go rf.sendEntries(peer)
+			args := rf.makeAppendEntriesArgs(peer)
+			go rf.sendEntries(peer, args)
 		}
 
 	}
@@ -850,24 +888,8 @@ type InstallSnapshotReply struct {
 
 // shall be called as go routine
 // if rf.lastIncludedIndex > 0 && rf.nextIndex[peer] <= rf.lastIncludedIndex 才调用
-func (rf *Raft) sendSnapshot(peer int) {
-	rf.mu.Lock()
+func (rf *Raft) sendSnapshot(peer int, args *InstallSnapshotArgs) {
 	reply := &InstallSnapshotReply{}
-	if rf.state != Leader {
-		DPrintf("Server %v %p (Term: %v) Invalid state for sendSnapshot: %v", rf.me, rf, rf.currentTerm, rf.state)
-		rf.mu.Unlock()
-		return
-	}
-	args := &InstallSnapshotArgs{ // !!! 读取不加锁 是因为读到旧数据也不影响结果，如果很旧，其他会拒绝，重新发就行了
-		Term:              rf.currentTerm,
-		LeaderId:          rf.me,
-		LastIncludedIndex: rf.lastIncludedIndex,
-		LastIncludedTerm:  rf.lastIncludedTerm,
-		Snapshot:          rf.snapshot,
-		Done:              true,
-	}
-	DPrintf("rf.sendSnapshot: Server %v %p (Term: %v, State: %v) send snapshot to %v, args.Snapshot: %v", rf.me, rf, rf.currentTerm, rf.state, peer, args.Snapshot)
-	rf.mu.Unlock()
 	if rf.sendInstallSnapshot(peer, args, reply) {
 		rf.mu.Lock()
 		defer rf.mu.Unlock()
@@ -980,7 +1002,7 @@ func (rf *Raft) trimLog(snapshoLastLogIndex int, snapshoLastLogTerm int) {
 // 当新选出的领导者的日志比其中一个follower目前提交日志少时，可能会出现follower提交的日志超过领导者的日志最高索引，如果直接index - rf.getFirstLogIndex()会出错
 func (rf *Raft) updateCommitIndex(index int) bool {
 	for N := index; N > rf.commitIndex; N-- {
-		if term, _ := rf.getterm(N); term == rf.currentTerm {
+		if term, _ := rf.GetTerm(N); term == rf.currentTerm {
 			count := 1 //getFirstLogIndex
 			for i := range rf.peers {
 				if i != rf.me && rf.matchIndex[i] >= N {
@@ -1008,7 +1030,17 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 // warning: not used actually.
 var ErrOutOfBound = errors.New("index out of bound")
 
-func (rf *Raft) getterm(index int) (int, error) {
+func (rf *Raft) GetTerm(index int) (int, error) {
+	if index < rf.getFirstLogIndex() || index > rf.getLastLogIndex() {
+		return 0, ErrOutOfBound
+	}
+	index = index - rf.getFirstLogIndex()
+	return rf.log[index].Term, nil
+}
+
+func (rf *Raft) GetTermWithoutLock(index int) (int, error) {
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
 	if index < rf.getFirstLogIndex() || index > rf.getLastLogIndex() {
 		return 0, ErrOutOfBound
 	}
@@ -1057,7 +1089,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}
 
 	for i, entry := range args.Entries { // 在follower日志中找到第一个任期不匹配的日志
-		if term, err := rf.getterm(entry.Index); err != nil || term != entry.Term {
+		if term, err := rf.GetTerm(entry.Index); err != nil || term != entry.Term {
 			rf.truncateSuffix(entry.Index) // 如果 firstlogindex < index <= lastlogindex，但index对应的任期不同，则截断日志到index的前一条为止
 			rf.log = append(rf.log, args.Entries[i:]...)
 			// rf.persist()    // !!!!!!!!!!!!!!!!!!!!!!!!!!!! 加在这里是因为可以优化，如果上面退出就不需要持久化，但是会复杂些 不如直接在1034行加一个统一的持久化
@@ -1086,11 +1118,11 @@ func (rf *Raft) truncateSuffix(index int) {
 }
 
 func (rf *Raft) findFirstConflict(index int) (int, int) {
-	conflictTerm, _ := rf.getterm(index)
+	conflictTerm, _ := rf.GetTerm(index)
 	firstConflictIndex := index
 	// warning: skip the snapshot index since it cannot conflict if all goes well.
 	for i := index - 1; i > rf.getFirstLogIndex(); i-- {
-		if term, _ := rf.getterm(i); term != conflictTerm { // 如果是冲突任期的日志，则都不匹配
+		if term, _ := rf.GetTerm(i); term != conflictTerm { // 如果是冲突任期的日志，则都不匹配
 			break
 		}
 		firstConflictIndex = i
@@ -1099,7 +1131,7 @@ func (rf *Raft) findFirstConflict(index int) (int, int) {
 }
 
 func (rf *Raft) checkLogPrefixTermMatched(leaderPrevLogIndex, leaderPrevLogTerm int) Err {
-	prevLogTerm, err := rf.getterm(leaderPrevLogIndex)
+	prevLogTerm, err := rf.GetTerm(leaderPrevLogIndex)
 	if err != nil {
 		return IndexNotMatched
 	}
@@ -1137,6 +1169,7 @@ func (rf *Raft) applyLog() {
 					CommandValid: true,
 					Command:      rf.log[i-rf.getFirstLogIndex()].Command,
 					CommandIndex: i,
+					CommandTerm:  rf.log[i-rf.getFirstLogIndex()].Term,
 				}
 				DPrintf("Server %v %p (Term: %v, State: %v) apply the msg: CommandValid: %v, Command: %v, CommandIndex: %v ", rf.me, rf, rf.currentTerm, rf.state, msg.CommandValid, msg.Command, msg.CommandIndex)
 				msgs = append(msgs, msg)

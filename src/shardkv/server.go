@@ -96,6 +96,7 @@ type ShardDB struct {
 	ToGid   int // the group (id) to which the server is moving out the shard data.
 }
 
+// if op is applied, return true.
 func (kv *ShardKV) isApplied(op *Op) bool {
 	maxAppliedOpId, exist := kv.maxAppliedOpIdOfClerk[op.ClerkId]
 	return exist && maxAppliedOpId >= op.OpId
@@ -144,7 +145,7 @@ func (kv *ShardKV) isEligibleToUpdateShard(reconfigureToConfigNum int) bool {
 	// these two checkings ensure that the server must have been installed the config with the config num `reconfigureToConfigNum`
 	// and must be waiting to install or delete shards.
 	isEligibleToUpdateShard := kv.reconfigureToConfigNum == reconfigureToConfigNum && kv.reconfigureToConfigNum == kv.config.Num
-	// DPrintf("ShardKV.isEligibleToUpdateShard: S(G%v-%v) kv.reconfigureToConfigNum=%v, reconfigureToConfigNum=%v, config.Num=%v, isEligibleToUpdateShard=%v", kv.gid, kv.me, kv.reconfigureToConfigNum, reconfigureToConfigNum, kv.config.Num, isEligibleToUpdateShard)
+	DPrintf("ShardKV.isEligibleToUpdateShard: G%v-%v kv.reconfigureToConfigNum=%v, args.reconfigureToConfigNum=%v, kv.config.Num=%v, isEligibleToUpdateShard=%v", kv.gid, kv.me, kv.reconfigureToConfigNum, reconfigureToConfigNum, kv.config.Num, isEligibleToUpdateShard)
 	return isEligibleToUpdateShard
 }
 
@@ -191,7 +192,7 @@ func (kv *ShardKV) wait(op *Op) {
 	for !kv.killed() {
 		if notifier := kv.getNotifier(op, false); notifier != nil {
 			notifier.done.Wait()
-		} else {
+		} else { // 如果最新的操作超时或者被op在raft协议层达成一致而通知，对应clerkid的notifier就会被删除，然后退出循环
 			break
 		}
 	}
@@ -212,12 +213,12 @@ func (kv *ShardKV) makeAlarm(op *Op) {
 }
 
 func (kv *ShardKV) notify(op *Op) {
-	if notifer := kv.getNotifier(op, false); notifer != nil {
+	if notifier := kv.getNotifier(op, false); notifier != nil {
 		// only the latest op can delete the notifier.
-		if op.OpId == notifer.maxRegisteredOpId {
+		if op.OpId == notifier.maxRegisteredOpId {
 			delete(kv.notifierOfClerk, op.ClerkId)
 		}
-		notifer.done.Broadcast()
+		notifier.done.Broadcast()
 	}
 }
 
@@ -331,16 +332,15 @@ func StartServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persister,
 	// kv.mck = shardctrler.MakeClerk(kv.ctrlers)
 	kv.hightWaterEnabled = maxraftstate != -1
 	kv.dead = 0
+	kv.maxAppliedOpIdOfClerk = make(map[int64]int64)
+	kv.reconfigureToConfigNum = -1
+	for i := range kv.shardDBs {
+		kv.shardDBs[i].DB = make(map[string]string)
+		kv.shardDBs[i].State = NotServing
+	}
 
 	if kv.hightWaterEnabled && persister.SnapshotSize() > 0 {
 		kv.ingestSnapshot(persister.ReadSnapshot())
-	} else {
-		kv.reconfigureToConfigNum = -1
-		for i := range kv.shardDBs {
-			kv.shardDBs[i].DB = make(map[string]string)
-			kv.shardDBs[i].State = NotServing
-		}
-		kv.maxAppliedOpIdOfClerk = make(map[int64]int64)
 	}
 
 	kv.notifierOfClerk = map[int64]*Notifier{}
@@ -365,10 +365,10 @@ func StartServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persister,
 
 func (kv *ShardKV) ticker() {
 	for !kv.killed() {
-		if _, isLeader := kv.rf.GetState(); !isLeader {
-			time.Sleep(tickerInterval)
-			continue
-		}
+		// if _, isLeader := kv.rf.GetState(); !isLeader {
+		// 	time.Sleep(tickerInterval)
+		// 	continue
+		// }
 		// the config change has to be contiguous.
 		// for example, there're three groups A, B, C, and three contiguous configs X, Y, Z and a shard S.
 		// config X: A serves S.
@@ -388,7 +388,7 @@ func (kv *ShardKV) ticker() {
 		nextConfig := kv.sc.Query(nextConfigNum) // 返回后一个配置或者最新配置（如果大于配置数，则返回最新配置	）
 
 		kv.mu.Lock()
-
+		DPrintf("ShardKV.ticker(): S%v-%v CN: %v , RCN: %v is going to reconfigure to nextConfig (NCN=%v)", kv.gid, kv.me, kv.config.Num, kv.reconfigureToConfigNum, nextConfig.Num)
 		// a config change is performed only if there's no pending config change.
 		// however, it's not necessary to reject proposing new configs during reconfiguring
 		// so long as we ensure that a reconfiguring starts only after the previous reconfiguring is completed.
@@ -416,7 +416,7 @@ func (kv *ShardKV) migrator() {
 			for shard := 0; shard < shardctrler.NShards; shard++ {
 				if kv.shardDBs[shard].State == MovingIn { // InstallConfig中更新的状态
 					migrating = true
-					DPrintf("ShardKV.migrator() S%v-%v CN:%v need receive shard (SN=%v) from G%v", kv.gid, kv.me, kv.config.Num, shard, kv.shardDBs[shard].FromGid)
+					DPrintf("ShardKV.migrator() S%v-%v CN:%v RCN:%v need receive shard (SN=%v) from G%v", kv.gid, kv.me, kv.config.Num, kv.reconfigureToConfigNum, shard, kv.shardDBs[shard].FromGid)
 				}
 
 				if kv.shardDBs[shard].State == MovingOut { // InstallConfig中更新的状态
@@ -440,23 +440,25 @@ func (kv *ShardKV) migrator() {
 
 					args := kv.makeInstallShardArgs(shard)
 					servers := kv.config.Groups[kv.shardDBs[shard].ToGid]
+					DPrintf("ShardKV.migrator() S%v-%v CN:%v RCN:%v sends shard (SN=%v) to G%v Servers(%v)", kv.gid, kv.me, kv.config.Num, kv.reconfigureToConfigNum, shard, kv.shardDBs[shard].ToGid, servers)
 					// this deep clone may be not necessary.
 					serversClone := make([]string, 0)
 					serversClone = append(serversClone, servers...)
 
 					go kv.sendShard(&args, serversClone)
 
-					DPrintf("ShardKV.migrator() S%v-%v CN:%v sends shard (SN=%v) to G%v", kv.gid, kv.me, kv.config.Num, shard, kv.shardDBs[shard].ToGid)
+					DPrintf("ShardKV.migrator() S%v-%v CN:%v RCN:%v sends shard (SN=%v) to G%v", kv.gid, kv.me, kv.config.Num, kv.reconfigureToConfigNum, shard, kv.shardDBs[shard].ToGid)
 				}
 			}
 		}
 		if kv.reconfigureToConfigNum != -1 {
-			DPrintf("ShardKV.migrator(): S%v-%v is reconfiguring to config (RCN=%v)", kv.gid, kv.me, kv.reconfigureToConfigNum)
+			DPrintf("ShardKV.migrator(): S%v-%v CN: %v is reconfiguring to config (RCN=%v)", kv.gid, kv.me, kv.config.Num, kv.reconfigureToConfigNum)
 		}
 		if kv.reconfigureToConfigNum != -1 && !migrating {
 			kv.reconfigureToConfigNum = -1
 		}
-
+		_, state := kv.rf.GetState()
+		DPrintf("ShardKV.migrator(): S%v-%v is leader: %v !", kv.gid, kv.me, state)
 		kv.mu.Unlock()
 		time.Sleep(checkMigrationStateInterval)
 	}
@@ -475,6 +477,7 @@ func (kv *ShardKV) sendShard(args *InstallShardArgs, servers []string) {
 			// DPrintf("ShardKV.sendShard(): S%v-%v ")
 			if kv.isEligibleToUpdateShard(args.ReconfigureToConfigNum) && kv.shardDBs[args.Shard].State == MovingOut {
 				// propose a delete shard op to sync the uninstallation of a shard.
+				// DPrintf("ShardKV.sendShard(): S%v-%v CN: %v sends delete shard (SN=%v) to G%v", kv.gid, kv.me, kv.config.Num, args.Shard, kv.shardDBs[args.Shard].ToGid)
 				op := &Op{OpType: "DeleteShard", ReconfigureToConfigNum: args.ReconfigureToConfigNum, Shard: args.Shard}
 				go kv.propose(op)
 			}
@@ -482,7 +485,9 @@ func (kv *ShardKV) sendShard(args *InstallShardArgs, servers []string) {
 			kv.mu.Unlock()
 			break
 		}
+		DPrintf("ShardKV.sendShard(): S%v-%v CN: %v sends shard (SN=%v) to G%v-%v failed err: %v", kv.gid, kv.me, kv.config.Num, args.Shard, kv.shardDBs[args.Shard].ToGid, server, reply.Err)
 	}
+
 	// kv.migrating = false
 	// if no server in the receiver replica group has proposed an install shard op,
 	// the next round of `handoffShards` will retry.
@@ -494,6 +499,7 @@ func (kv *ShardKV) InstallShard(args *InstallShardArgs, reply *InstallShardReply
 	// only pull shards from leader
 	if _, isLeader := kv.rf.GetState(); !isLeader {
 		reply.Err = ErrWrongLeader
+		DPrintf("ShardKV.InstallShard(): S%v-%v rejects InstallShard due to not being the leader", kv.gid, kv.me)
 		return
 	}
 
@@ -534,8 +540,8 @@ func (kv *ShardKV) InstallShard(args *InstallShardArgs, reply *InstallShardReply
 		reply.Err = OK
 		return
 	}
-
 	reply.Err = ErrNotApplied
+	DPrintf("ShardKV.InstallShard(): S%v-%v faild to InstallShard (RCN=%v SN=%v) due to:%v", kv.gid, kv.me, args.ReconfigureToConfigNum, args.Shard, reply.Err)
 }
 
 func (kv *ShardKV) makeInstallShardArgs(shard int) InstallShardArgs {
@@ -575,9 +581,10 @@ func (kv *ShardKV) engineStart() {
 
 			} else if kv.isAdminOp(op) {
 				kv.maybeApplyAdminOp(op)
-
+				DPrintf("ShardKV.engineStart(): S%v-%v applies admin opType:%v, opConfig:%v, op.RCN:%v, opShard:%v, op: %v", kv.gid, kv.me, op.OpType, op.Config, op.Shard, op.ReconfigureToConfigNum, op)
 			} else {
 				kv.maybeApplyClientOp(op)
+				DPrintf("ShardKV.engineStart(): S%v-%v applies client op: %v", kv.gid, kv.me, op)
 			}
 
 			if kv.hightWaterEnabled && kv.approachHWLimit() {
@@ -671,8 +678,10 @@ func (kv *ShardKV) maybeApplyAdminOp(op *Op) {
 			kv.reconfigureToConfigNum = op.Config.Num
 			kv.installConfig(op.Config)
 
-			DPrintf("ShardKV.maybeApplyAdminOp: S%v-%v installed config (ACN=%v)", kv.gid, kv.me, kv.config.Num)
+			DPrintf("ShardKV.maybeApplyAdminOp: S%v-%v installed config (OCN=%v)", kv.gid, kv.me, kv.config.Num)
+			return
 		}
+		DPrintf("ShardKV.maybeApplyAdminOp: S%v-%v ignored install config (OCN=%v) due to RCN: %v OCN:%v CN:%v kv.isMigrating():%v", kv.gid, kv.me, op.Config.Num, kv.reconfigureToConfigNum, op.Config.Num, kv.config.Num, kv.isMigrating())
 
 	case "InstallShard":
 		if kv.isEligibleToUpdateShard(op.ReconfigureToConfigNum) && kv.shardDBs[op.Shard].State == MovingIn {

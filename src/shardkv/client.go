@@ -93,7 +93,7 @@ func (ck *Clerk) Get(key string) string {
 				}
 			}
 		}
-		time.Sleep(200 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 		// ask controller for the latest configuration.
 		ck.config = ck.sm.Query(ck.config.Num + 1)
 	}
@@ -124,11 +124,12 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 					return
 				}
 				if ok && reply.Err == ErrWrongGroup {
+					time.Sleep(200 * time.Millisecond) // 等待200ms 来等待迁移完成或者再找完一轮服务器后再次尝试
 					break
 				}
 			}
 		}
-		time.Sleep(200 * time.Millisecond) // 等待200ms 来等待迁移完成或者再找完一轮服务器后再次尝试
+		time.Sleep(100 * time.Millisecond) // 等待200ms 来等待迁移完成或者再找完一轮服务器后再次尝试
 		// ask controller for the latest configuration.
 		ck.config = ck.sm.Query(ck.config.Num + 1)
 	}

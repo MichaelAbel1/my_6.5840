@@ -1,0 +1,4 @@
+python3 dstest --iter 100 --workers 10 --timeout 60 --output out.log TestBasic4A TestSpeed4A TestConcurrent4A TestUnreliable4A TestUnreliableOneKey4A TestOnePartition4A TestManyPartitionsOneClient4A TestManyPartitionsManyClients4A TestPersistOneClient4A TestPersistConcurrent4A TestPersistConcurrentUnreliable4A TestPersistPartition4A TestPersistPartitionUnreliable4A TestPersistPartitionUnreliableLinearizable4A
+# python3 dstest -r --iter 100 --workers 10 --timeout 40 --output out.log TestSpeed4A
+# python3 dstest --iter 100 --workers 10 --timeout 60 --output out.log TestSnapshotRPC4B TestSnapshotSize4B TestSpeed4B TestSnapshotRecover4B TestSnapshotRecoverManyClients4B TestSnapshotUnreliable4B TestSnapshotUnreliableRecover4B TestSnapshotUnreliableRecoverConcurrentPartition4B TestSnapshotUnreliableRecoverConcurrentPartitionLinearizable4B
+# python3 dstest --iter 100 --workers 10 --timeout 60 --output out.log TestSnapshotUnreliableRecoverConcurrentPartitionLinearizable4B
